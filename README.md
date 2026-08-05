@@ -2,6 +2,8 @@
 
 Shared React component library for `kompassi-v2-frontend` and `larpit-fi`. Ships raw TypeScript source — no build step. Consumers add this package's name to `transpilePackages` in their `next.config.ts` so Next's own compiler transpiles the source directly.
 
+[Live demo](https://con2.github.io/components)
+
 ## Install
 
 ```json
