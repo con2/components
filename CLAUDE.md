@@ -64,3 +64,19 @@ Ask whether it's actually shared. This library exists because two apps converged
 ## XSS-sensitive components
 
 `LinebreaksDangerousHtml` and `ParagraphsDangerousHtml` render raw/dangerous HTML via `dangerouslySetInnerHTML`. Only ever pass them trusted content.
+
+## Commit messages must follow Conventional Commits
+
+**This is enforced, not a style preference.** CI has two things riding on it:
+
+- The `commitlint` job rejects any non-conforming commit message on a PR.
+- `semantic-release` (the `release` job, on push to `main`) determines the next version - and whether to release at all - by parsing commit types since the last tag. A commit that doesn't start with `feat:`, `fix:`, etc. is invisible to it: no version bump, no tag, no GitHub Release, even if real changes shipped.
+
+Format: `<type>[optional !][optional (scope)]: <description>`, e.g. `feat: add ColorBadge component`, `fix(temporal): handle bare ISO date strings`, `feat!: drop Section and Heading`. Common types and what they trigger:
+
+- `fix:` -> patch release
+- `feat:` -> minor release
+- `!` after the type/scope, or a `BREAKING CHANGE:` footer -> major release
+- `chore:`, `docs:`, `test:`, `refactor:`, `ci:` -> no release triggered on their own (still required to pass `commitlint`, just don't bump the version by themselves)
+
+If a change should ship a release, its commit message must be one of the release-triggering types above - `chore: add demo pages` will pass CI but silently produce no release.
