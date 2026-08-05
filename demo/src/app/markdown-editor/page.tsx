@@ -29,9 +29,9 @@ export default function MarkdownEditorPage() {
       <h2>With a character limit</h2>
       <p>
         <code>maxLength</code> is optional - when set, it caps input the same
-        way <code>TextArea</code> does (native limit + a live counter that
-        turns red at the limit), with the same inlined fi/en/sv
-        maximum-length message.
+        way <code>TextArea</code> does (native limit + a live counter that turns
+        red at the limit), with the same inlined fi/en/sv maximum-length
+        message.
       </p>
       <form>
         <label className="form-label" htmlFor="shortDescription">
