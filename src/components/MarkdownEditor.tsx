@@ -2,7 +2,7 @@
 
 import MDEditor from "@uiw/react-md-editor";
 import * as commands from "@uiw/react-md-editor/commands";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 // Required for the editor's layout (in particular, for the text area and preview pane
 // to actually fill the visible bordered box instead of collapsing to their browser
@@ -18,6 +18,20 @@ const insertHeadingLabels: Record<string, string> = {
   sv: "Infoga rubrik",
 };
 
+/// This message is generic and not worth asking every caller to supply a
+/// translation for - inlined here instead of a required prop.
+const maxLengthExceededMessages: Record<
+  string,
+  (maxLength: number, currentLength: number) => string
+> = {
+  en: (maxLength, currentLength) =>
+    `Maximum length is ${maxLength} characters (current: ${currentLength}).`,
+  fi: (maxLength, currentLength) =>
+    `Enimmäispituus on ${maxLength} merkkiä (nykyinen: ${currentLength}).`,
+  sv: (maxLength, currentLength) =>
+    `Maximilängden är ${maxLength} tecken (nuvarande: ${currentLength}).`,
+};
+
 interface MarkdownEditorProps {
   id?: string;
   name: string;
@@ -26,6 +40,7 @@ interface MarkdownEditorProps {
   readOnly?: boolean;
   rows?: number;
   locale?: string;
+  maxLength?: number;
 }
 
 // Keep the toolbar limited to the formatting we actually allow through the backend
@@ -64,10 +79,40 @@ export default function MarkdownEditor({
   readOnly,
   rows = 10,
   locale = "en",
+  maxLength,
 }: MarkdownEditorProps) {
   const insertHeadingLabel =
     insertHeadingLabels[locale] ?? insertHeadingLabels.en;
   const [value, setValue] = useState(defaultValue);
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
+
+  const handleChange = useCallback(
+    (newValue?: string) => {
+      const nextValue = newValue ?? "";
+      setValue(nextValue);
+
+      if (maxLength === undefined) {
+        return;
+      }
+
+      const hiddenInput = hiddenInputRef.current;
+      if (!hiddenInput) {
+        return;
+      }
+
+      if (nextValue.length > maxLength) {
+        const formatMessage =
+          maxLengthExceededMessages[locale] ?? maxLengthExceededMessages.en;
+        hiddenInput.setCustomValidity(
+          formatMessage(maxLength, nextValue.length),
+        );
+      } else {
+        hiddenInput.setCustomValidity("");
+      }
+    },
+    [maxLength, locale],
+  );
+
   // The toolbar (~40px) sits above the text area within `height`, so the text area's
   // own minHeight must leave room for it - otherwise its min-height (forced via an
   // inline style, see below) exceeds the space actually left for it after the
@@ -76,13 +121,21 @@ export default function MarkdownEditor({
   const contentHeight = rows * 24;
   const editorHeight = contentHeight + toolbarHeight;
 
+  const atLimit = maxLength !== undefined && value.length >= maxLength;
+
   return (
     <div data-color-mode="light">
-      <input type="hidden" name={name} value={value} required={required} />
+      <input
+        type="hidden"
+        name={name}
+        value={value}
+        required={required}
+        ref={hiddenInputRef}
+      />
       <MDEditor
         id={id}
         value={value}
-        onChange={(newValue) => setValue(newValue ?? "")}
+        onChange={handleChange}
         preview={readOnly ? "preview" : "live"}
         visibleDragbar={false}
         height={editorHeight}
@@ -92,9 +145,14 @@ export default function MarkdownEditor({
         // 100px regardless of `height`, even though the surrounding chrome (and the
         // preview pane) do size to `height` correctly.
         minHeight={contentHeight}
-        textareaProps={{ readOnly }}
+        textareaProps={{ readOnly, maxLength }}
         commands={buildToolbarCommands(insertHeadingLabel)}
       />
+      {maxLength !== undefined && (
+        <small className={atLimit ? "text-danger" : "text-muted"}>
+          {value.length}/{maxLength}
+        </small>
+      )}
     </div>
   );
 }

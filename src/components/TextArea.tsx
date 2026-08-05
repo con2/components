@@ -24,6 +24,7 @@ interface Props {
   name: string;
   rows?: number;
   defaultValue?: string;
+  required?: boolean;
   readOnly?: boolean;
   maxLength: number;
   locale: string;
@@ -34,6 +35,7 @@ export default function TextArea({
   name,
   rows,
   defaultValue,
+  required,
   readOnly,
   maxLength,
   locale,
@@ -65,6 +67,7 @@ export default function TextArea({
         name={name}
         rows={rows}
         defaultValue={defaultValue}
+        required={required}
         readOnly={readOnly}
         maxLength={maxLength}
         onChange={handleChange}
