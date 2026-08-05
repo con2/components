@@ -1,39 +1,16 @@
+"use client";
+
 import Link from "next/link";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { AlertNavigateOnClose } from "@con2/components";
 
-interface Props {
-  searchParams: Promise<{ status?: string }>;
-}
-
-export default async function AlertNavigateOnCloseDemoPage({
-  searchParams,
-}: Props) {
-  const { status } = await searchParams;
+function AlertNavigateOnCloseDemo() {
+  const searchParams = useSearchParams();
+  const status = searchParams.get("status");
 
   return (
-    <div>
-      <h1>AlertNavigateOnClose</h1>
-      <p>
-        This component itself doesn&apos;t read the query string - it&apos;s
-        a dismissible <code>Alert</code> that, when closed, navigates (via{" "}
-        <code>router.replace</code>) to <code>href</code> (defaulting to the
-        current pathname), which is how a caller clears a
-        server-action-set query string parameter after the user has seen the
-        message. This demo page reads its own <code>?status=</code> query
-        parameter to decide whether to show the alert at all.
-      </p>
-      <p>
-        Try it: <Link href="/alert-navigate-on-close?status=success">
-          ?status=success
-        </Link>{" "}
-        or{" "}
-        <Link href="/alert-navigate-on-close?status=error">
-          ?status=error
-        </Link>
-        . Dismissing the alert below will strip the query parameter from the
-        URL.
-      </p>
-
+    <>
       {status === "success" && (
         <AlertNavigateOnClose variant="success">
           Your changes were saved successfully.
@@ -50,6 +27,39 @@ export default async function AlertNavigateOnCloseDemoPage({
           shown right now.
         </p>
       )}
+    </>
+  );
+}
+
+export default function AlertNavigateOnCloseDemoPage() {
+  return (
+    <div>
+      <h1>AlertNavigateOnClose</h1>
+      <p>
+        This component itself doesn&apos;t read the query string - it&apos;s
+        a dismissible <code>Alert</code> that, when closed, navigates (via{" "}
+        <code>router.replace</code>) to <code>href</code> (defaulting to the
+        current pathname), which is how a caller clears a
+        server-action-set query string parameter after the user has seen the
+        message. This demo page reads its own <code>?status=</code> query
+        parameter to decide whether to show the alert at all.
+      </p>
+      <p>
+        Try it:{" "}
+        <Link href="/alert-navigate-on-close?status=success">
+          ?status=success
+        </Link>{" "}
+        or{" "}
+        <Link href="/alert-navigate-on-close?status=error">
+          ?status=error
+        </Link>
+        . Dismissing the alert below will strip the query parameter from the
+        URL.
+      </p>
+
+      <Suspense fallback={null}>
+        <AlertNavigateOnCloseDemo />
+      </Suspense>
     </div>
   );
 }

@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { Messages } from "@con2/components";
+"use client";
 
-interface Props {
-  searchParams: Promise<{ error?: string; success?: string }>;
-}
+import Link from "next/link";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { Messages } from "@con2/components";
 
 const messages = {
   saved: "Your order was saved successfully.",
@@ -12,9 +12,17 @@ const messages = {
   forbidden: "You do not have permission to perform this action.",
 };
 
-export default async function MessagesDemoPage({ searchParams }: Props) {
-  const params = await searchParams;
+function MessagesDemo() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error") ?? undefined;
+  const success = searchParams.get("success") ?? undefined;
 
+  return (
+    <Messages searchParams={{ error, success }} messages={messages} />
+  );
+}
+
+export default function MessagesDemoPage() {
   return (
     <div>
       <h1>Messages</h1>
@@ -34,7 +42,9 @@ export default async function MessagesDemoPage({ searchParams }: Props) {
         <Link href="/messages?error=forbidden">?error=forbidden</Link>.
       </p>
 
-      <Messages searchParams={params} messages={messages} />
+      <Suspense fallback={null}>
+        <MessagesDemo />
+      </Suspense>
     </div>
   );
 }

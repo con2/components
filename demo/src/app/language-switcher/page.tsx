@@ -1,3 +1,5 @@
+"use client";
+
 import Nav from "react-bootstrap/Nav";
 
 import { LanguageSwitcher } from "@con2/components";

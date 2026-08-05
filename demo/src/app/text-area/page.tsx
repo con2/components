@@ -1,3 +1,5 @@
+"use client";
+
 import { TextArea } from "@con2/components";
 
 export default function TextAreaPage() {

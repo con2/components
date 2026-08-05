@@ -5,6 +5,30 @@ import z from "zod";
 /// supply one explicitly.
 export const defaultTimezone = "Europe/Helsinki";
 
+/// Parses a string that may be a full instant (with UTC offset/`Z`), a naive
+/// local datetime (no offset), or a bare calendar date - in that order of
+/// preference - since `Temporal.Instant.from` throws on the latter two, but
+/// callers (eg. `FormattedDate`'s ISO date string, or a GraphQL `Date` scalar)
+/// commonly hand us those instead of a full instant string.
+function stringToZonedDateTime(
+  value: string,
+  timezone: Temporal.TimeZoneLike,
+): Temporal.ZonedDateTime {
+  try {
+    return Temporal.Instant.from(value).toZonedDateTimeISO(timezone);
+  } catch {
+    // not a full instant string (no UTC offset) - fall through
+  }
+  try {
+    return Temporal.PlainDateTime.from(value).toZonedDateTime(timezone);
+  } catch {
+    // not a naive local datetime either - fall through
+  }
+  return Temporal.PlainDate.from(value).toZonedDateTime({
+    timeZone: timezone,
+  });
+}
+
 export function toZonedDateTime(
   value: Temporal.ZonedDateTime | Temporal.Instant | Date | string,
   timezone: Temporal.TimeZoneLike = defaultTimezone,
@@ -12,13 +36,14 @@ export function toZonedDateTime(
   if (value instanceof Temporal.ZonedDateTime) {
     return value;
   }
-  if (value instanceof Date) {
-    value = Temporal.Instant.fromEpochMilliseconds(value.getTime());
-  }
   if (typeof value === "string") {
-    value = Temporal.Instant.from(value);
+    return stringToZonedDateTime(value, timezone);
   }
-  return value.toZonedDateTimeISO(timezone);
+  const instant =
+    value instanceof Date
+      ? Temporal.Instant.fromEpochMilliseconds(value.getTime())
+      : value;
+  return instant.toZonedDateTimeISO(timezone);
 }
 
 /// Null in, null out
