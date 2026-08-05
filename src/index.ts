@@ -34,9 +34,6 @@ export {
   FormattedDateTimeRange,
 } from "./components/FormattedDateTimeRange";
 
-export { Heading } from "./components/Heading";
-export type { HeadingLevel, HeadingProps } from "./components/Heading";
-
 export { default as InterceptingRouteModal } from "./components/InterceptingRouteModal";
 
 export { default as LanguageSwitcher } from "./components/LanguageSwitcher";
@@ -60,8 +57,6 @@ export { default as ParagraphsDangerousHtml } from "./components/ParagraphsDange
 export { default as PatternTextInput } from "./components/PatternTextInput";
 
 export { ReorderableDataTable } from "./components/ReorderableDataTable";
-
-export { default as Section } from "./components/Section";
 
 export { default as ServerTabs } from "./components/ServerTabs";
 export type { Tab } from "./components/ServerTabs";
