@@ -18,8 +18,8 @@ export default function LanguageSwitcherPage() {
       <p>
         Renders a Bootstrap <code>NavDropdown</code> of the other available
         locales. <code>buildLocaleHref</code> controls how the target href is
-        constructed from the locale and the current path+query; it defaults
-        to prefixed routing (<code>{"`/${locale}${currentPathAndQuery}`"}</code>
+        constructed from the locale and the current path+query; it defaults to
+        prefixed routing (<code>{"`/${locale}${currentPathAndQuery}`"}</code>
         ).
       </p>
 

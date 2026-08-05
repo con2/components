@@ -114,9 +114,7 @@ describe("toISODate", () => {
 
   it("respects a custom timezone parameter", () => {
     const instant = "2025-11-23T10:00:00Z";
-    expect(toISODate(instant, otherTimezone)).not.toBe(
-      toISODate(instant),
-    );
+    expect(toISODate(instant, otherTimezone)).not.toBe(toISODate(instant));
   });
 });
 

@@ -5,12 +5,12 @@
  * what the user sees.
  */
 export function normalizeFormData(
-  data: FormData
+  data: FormData,
 ): Record<string, FormDataEntryValue> {
   return Object.fromEntries(
     Array.from(data.entries()).map(([key, value]) => [
       key,
       typeof value === "string" ? value.replace(/\r/g, "") : value,
-    ])
+    ]),
   );
 }

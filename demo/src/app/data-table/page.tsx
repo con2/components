@@ -14,7 +14,12 @@ interface Person {
 }
 
 const people: Person[] = [
-  { id: 1, name: "Alice Anderson", role: "Organizer", email: "alice@example.com" },
+  {
+    id: 1,
+    name: "Alice Anderson",
+    role: "Organizer",
+    email: "alice@example.com",
+  },
   { id: 2, name: "Bob Baker", role: "Volunteer", email: "bob@example.com" },
   { id: 3, name: "Carol Chen", role: "Speaker", email: "carol@example.com" },
   { id: 4, name: "Dave Diaz", role: "Attendee", email: "dave@example.com" },
@@ -33,7 +38,9 @@ const columns: Column<Person>[] = [
   {
     slug: "email",
     title: "Email",
-    getCellContents: (person) => <a href={`mailto:${person.email}`}>{person.email}</a>,
+    getCellContents: (person) => (
+      <a href={`mailto:${person.email}`}>{person.email}</a>
+    ),
   },
 ];
 
@@ -72,8 +79,8 @@ export default function DataTablePage() {
 
       <h2>defaultCellElement / defaultCellContents directly</h2>
       <p>
-        Columns can reuse the exported defaults explicitly instead of relying
-        on DataTable&apos;s implicit fallback.
+        Columns can reuse the exported defaults explicitly instead of relying on
+        DataTable&apos;s implicit fallback.
       </p>
       <DataTable
         rows={people.slice(0, 2)}

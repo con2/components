@@ -7,10 +7,9 @@ export default function TextAreaPage() {
     <div>
       <h1>TextArea</h1>
       <p>
-        A textarea with a live character counter and a custom validity
-        message once the value exceeds <code>maxLength</code>. This demo uses
-        a low limit (20 characters) so the message is easy to trigger by
-        typing.
+        A textarea with a live character counter and a custom validity message
+        once the value exceeds <code>maxLength</code>. This demo uses a low
+        limit (20 characters) so the message is easy to trigger by typing.
       </p>
       <form>
         <label htmlFor="bio" className="form-label">

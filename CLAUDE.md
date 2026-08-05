@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (and other AI agents) when working wi
 
 - Don't add a `dist/`, a bundler config, or a `.d.ts` generation step. Source is the artifact.
 - `"use client"` directives must be correct in the source itself — there's no downstream step that could add or strip them.
-- Within this library, **use relative imports only** (`./Foo`, `../helpers/bar`), never a `@/` path alias. `transpilePackages` does not resolve this library's own tsconfig path aliases against the consumer's bundler — a `@/...` import here would silently resolve against the *consumer's* `src/` tree instead and break.
+- Within this library, **use relative imports only** (`./Foo`, `../helpers/bar`), never a `@/` path alias. `transpilePackages` does not resolve this library's own tsconfig path aliases against the consumer's bundler — a `@/...` import here would silently resolve against the _consumer's_ `src/` tree instead and break.
 
 Distribution is git-based (`"@con2/components": "github:con2/components#<tag>"`), not the npm registry — there's no `dist/` to publish, so releases are just commits/tags.
 

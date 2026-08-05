@@ -36,9 +36,7 @@ export default function ReorderableDataTablePage() {
         messages={{ dragToReorder: "Drag to reorder" }}
         getTotalMessage={(total) => `${total} tracks`}
       />
-      <p>
-        Current order: {tracks.map((t) => t.title).join(", ")}
-      </p>
+      <p>Current order: {tracks.map((t) => t.title).join(", ")}</p>
     </div>
   );
 }

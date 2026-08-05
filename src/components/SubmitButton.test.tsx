@@ -40,15 +40,13 @@ describe("SubmitButton", () => {
 
   it("renders a spinner and is disabled while pending", async () => {
     vi.doMock("react-dom", async () => {
-      const actual = await vi.importActual<typeof import("react-dom")>(
-        "react-dom",
-      );
+      const actual =
+        await vi.importActual<typeof import("react-dom")>("react-dom");
       return { ...actual, useFormStatus: () => ({ pending: true }) };
     });
     vi.resetModules();
-    const { SubmitButton: PendingSubmitButton } = await import(
-      "./SubmitButton"
-    );
+    const { SubmitButton: PendingSubmitButton } =
+      await import("./SubmitButton");
 
     const { container } = render(
       <form>

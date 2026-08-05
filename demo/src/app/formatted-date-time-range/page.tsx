@@ -15,10 +15,10 @@ export default function FormattedDateTimeRangePage() {
     <div>
       <h1>FormattedDateTimeRange</h1>
       <p>
-        Renders <code>start</code>–<code>end</code>; when both fall on the
-        same day (per <code>isSameDay</code>), the end&apos;s date is omitted
-        (only its time is shown). <code>includeDuration</code> appends a
-        formatted duration in parentheses.
+        Renders <code>start</code>–<code>end</code>; when both fall on the same
+        day (per <code>isSameDay</code>), the end&apos;s date is omitted (only
+        its time is shown). <code>includeDuration</code> appends a formatted
+        duration in parentheses.
       </p>
       <ul>
         <li>

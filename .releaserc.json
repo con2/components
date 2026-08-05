@@ -1,0 +1,12 @@
+{
+  "branches": ["main"],
+  "repositoryUrl": "https://github.com/con2/components.git",
+  "plugins": [
+    ["@semantic-release/commit-analyzer", { "preset": "conventionalcommits" }],
+    [
+      "@semantic-release/release-notes-generator",
+      { "preset": "conventionalcommits" }
+    ],
+    "@semantic-release/github"
+  ]
+}

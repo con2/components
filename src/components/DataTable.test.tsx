@@ -60,7 +60,11 @@ describe("DataTable", () => {
     // doesn't specify its own, so with two plain columns each row renders
     // two links pointing at the same href.
     render(
-      <DataTable rows={rows} columns={columns} getRowHref={(row) => `/rows/${row.id}`} />,
+      <DataTable
+        rows={rows}
+        columns={columns}
+        getRowHref={(row) => `/rows/${row.id}`}
+      />,
     );
     const links = screen.getAllByRole("link");
     expect(links.map((l) => l.getAttribute("href"))).toEqual([

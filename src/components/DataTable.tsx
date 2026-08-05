@@ -27,9 +27,7 @@ function ResponsiveWrapper({
     case "md":
     case "lg":
     case "xl":
-      return (
-        <div className={`table-responsive-${responsive}`}>{children}</div>
-      );
+      return <div className={`table-responsive-${responsive}`}>{children}</div>;
     case true:
       return <div className="table-responsive">{children}</div>;
     default:

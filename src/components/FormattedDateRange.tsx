@@ -62,9 +62,7 @@ export function FormattedDateRange({
       // Same month and year: "1.–3.5.2024"
       return (
         <>
-          <Component dateTime={startDay.toString()}>
-            {startDay.day}.
-          </Component>
+          <Component dateTime={startDay.toString()}>{startDay.day}.</Component>
           –
           <FormattedDate
             locale={locale}

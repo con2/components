@@ -1,11 +1,7 @@
 import { Temporal } from "@js-temporal/polyfill";
 import { toZonedDateTime, defaultTimezone } from "../helpers/temporal";
 
-type DateTimeValue =
-  | Date
-  | Temporal.Instant
-  | Temporal.ZonedDateTime
-  | string;
+type DateTimeValue = Date | Temporal.Instant | Temporal.ZonedDateTime | string;
 
 export const defaultDateTimeOptions: Intl.DateTimeFormatOptions = {
   dateStyle: "medium",

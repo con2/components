@@ -37,9 +37,9 @@ export default function DimensionFiltersPage() {
       <h1>DimensionFilters</h1>
       <p>
         Presents each dimension as a dropdown and a free-text search field;
-        selecting a value updates the page&apos;s search params (soft
-        navigation via <code>router.replace</code>, with a{" "}
-        <code>{"<noscript>"}</code> submit button fallback).
+        selecting a value updates the page&apos;s search params (soft navigation
+        via <code>router.replace</code>, with a <code>{"<noscript>"}</code>{" "}
+        submit button fallback).
       </p>
       <Suspense fallback={<p>Loading filters…</p>}>
         <DimensionFilters

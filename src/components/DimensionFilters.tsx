@@ -42,7 +42,7 @@ export function DimensionFilters(props: Props) {
     (
       event:
         | React.ChangeEvent<HTMLSelectElement>
-        | React.FocusEvent<HTMLInputElement>
+        | React.FocusEvent<HTMLInputElement>,
     ) => {
       // update searchParams and navigate to it
       const { name, value } = event.target;
@@ -58,7 +58,7 @@ export function DimensionFilters(props: Props) {
       url.search = newSearchParams.toString();
       replace(url.toString());
     },
-    [searchParams, replace]
+    [searchParams, replace],
   );
 
   // For clients with JavaScript, do a soft navigation on submit.
@@ -81,7 +81,7 @@ export function DimensionFilters(props: Props) {
       url.search = newSearchParams.toString();
       replace(url.toString());
     },
-    [searchParams, replace]
+    [searchParams, replace],
   );
 
   const className = `row row-cols-md-auto g-3 align-items-center mt-1 mb-2 ${

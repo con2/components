@@ -18,7 +18,9 @@ export default function MarkdownEditorPage() {
         <MarkdownEditor
           id="description"
           name="description"
-          defaultValue={"# Welcome\n\nThis is **bold** text with a [link](https://example.com) and:\n\n- one\n- two\n- three"}
+          defaultValue={
+            "# Welcome\n\nThis is **bold** text with a [link](https://example.com) and:\n\n- one\n- two\n- three"
+          }
           insertHeadingLabel="Insert heading"
           rows={10}
         />

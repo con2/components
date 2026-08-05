@@ -23,8 +23,8 @@ function AlertNavigateOnCloseDemo() {
       )}
       {status !== "success" && status !== "error" && (
         <p className="text-muted">
-          No <code>?status=</code> query parameter is set, so no alert is
-          shown right now.
+          No <code>?status=</code> query parameter is set, so no alert is shown
+          right now.
         </p>
       )}
     </>
@@ -36,13 +36,13 @@ export default function AlertNavigateOnCloseDemoPage() {
     <div>
       <h1>AlertNavigateOnClose</h1>
       <p>
-        This component itself doesn&apos;t read the query string - it&apos;s
-        a dismissible <code>Alert</code> that, when closed, navigates (via{" "}
+        This component itself doesn&apos;t read the query string - it&apos;s a
+        dismissible <code>Alert</code> that, when closed, navigates (via{" "}
         <code>router.replace</code>) to <code>href</code> (defaulting to the
-        current pathname), which is how a caller clears a
-        server-action-set query string parameter after the user has seen the
-        message. This demo page reads its own <code>?status=</code> query
-        parameter to decide whether to show the alert at all.
+        current pathname), which is how a caller clears a server-action-set
+        query string parameter after the user has seen the message. This demo
+        page reads its own <code>?status=</code> query parameter to decide
+        whether to show the alert at all.
       </p>
       <p>
         Try it:{" "}
@@ -50,11 +50,8 @@ export default function AlertNavigateOnCloseDemoPage() {
           ?status=success
         </Link>{" "}
         or{" "}
-        <Link href="/alert-navigate-on-close?status=error">
-          ?status=error
-        </Link>
-        . Dismissing the alert below will strip the query parameter from the
-        URL.
+        <Link href="/alert-navigate-on-close?status=error">?status=error</Link>.
+        Dismissing the alert below will strip the query parameter from the URL.
       </p>
 
       <Suspense fallback={null}>

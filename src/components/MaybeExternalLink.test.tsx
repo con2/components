@@ -12,9 +12,7 @@ describe("MaybeExternalLink", () => {
 
   it("renders an external link with target=_blank and rel attributes for absolute URLs", () => {
     render(
-      <MaybeExternalLink href="https://example.com">
-        Example
-      </MaybeExternalLink>,
+      <MaybeExternalLink href="https://example.com">Example</MaybeExternalLink>,
     );
     const link = screen.getByRole("link", { name: /Example/ });
     expect(link).toHaveAttribute("href", "https://example.com");
@@ -24,9 +22,7 @@ describe("MaybeExternalLink", () => {
 
   it("renders the OpenInNewTab icon for external links", () => {
     const { container } = render(
-      <MaybeExternalLink href="https://example.com">
-        Example
-      </MaybeExternalLink>,
+      <MaybeExternalLink href="https://example.com">Example</MaybeExternalLink>,
     );
     expect(container.querySelector("svg.material-symbol")).toBeTruthy();
   });

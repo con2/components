@@ -19,7 +19,7 @@ export default function FormattedDateTimePage() {
         Accepts <code>Date</code>, <code>Temporal.Instant</code>,{" "}
         <code>Temporal.ZonedDateTime</code>, or an ISO 8601 string via{" "}
         <code>value</code>; formats using <code>options</code> (default{" "}
-        <code>{"{ dateStyle: \"medium\", timeStyle: \"short\" }"}</code>).
+        <code>{'{ dateStyle: "medium", timeStyle: "short" }'}</code>).
       </p>
       <ul>
         <li>
@@ -32,7 +32,7 @@ export default function FormattedDateTimePage() {
         </li>
         <li>
           locale=&quot;fi&quot;, custom options (
-          <code>{"{ dateStyle: \"full\", timeStyle: \"medium\" }"}</code>):{" "}
+          <code>{'{ dateStyle: "full", timeStyle: "medium" }'}</code>):{" "}
           <FormattedDateTime
             locale="fi"
             value={isoInstant}

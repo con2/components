@@ -251,9 +251,7 @@ export default function DateTimeInput({
       <input type="hidden" name={name} value={hiddenValue} />
 
       {isOutOfRange && (
-        <div className="text-warning small mt-1">
-          {messages.dateOutOfRange}
-        </div>
+        <div className="text-warning small mt-1">{messages.dateOutOfRange}</div>
       )}
     </div>
   );

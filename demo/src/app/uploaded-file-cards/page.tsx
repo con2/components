@@ -15,7 +15,10 @@ export default function UploadedFileCardsPage() {
       />
 
       <h2>Without files</h2>
-      <UploadedFileCards urls={[]} messages={{ noFileUploaded: "No file uploaded." }} />
+      <UploadedFileCards
+        urls={[]}
+        messages={{ noFileUploaded: "No file uploaded." }}
+      />
     </div>
   );
 }

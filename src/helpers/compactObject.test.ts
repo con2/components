@@ -34,8 +34,8 @@ describe("compactObject", () => {
   });
 
   it("removes multiple null/empty-string keys at once", () => {
-    expect(
-      compactObject({ a: null, b: "", c: "keep", d: null }),
-    ).toEqual({ c: "keep" });
+    expect(compactObject({ a: null, b: "", c: "keep", d: null })).toEqual({
+      c: "keep",
+    });
   });
 });

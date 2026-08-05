@@ -11,7 +11,10 @@ export default function Markdown({ input }: Props) {
     <ReactMarkdown
       rehypePlugins={[
         rehypeSanitize,
-        [rehypeExternalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] }],
+        [
+          rehypeExternalLinks,
+          { target: "_blank", rel: ["noopener", "noreferrer"] },
+        ],
       ]}
     >
       {input}

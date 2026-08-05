@@ -17,9 +17,7 @@ function MessagesDemo() {
   const error = searchParams.get("error") ?? undefined;
   const success = searchParams.get("success") ?? undefined;
 
-  return (
-    <Messages searchParams={{ error, success }} messages={messages} />
-  );
+  return <Messages searchParams={{ error, success }} messages={messages} />;
 }
 
 export default function MessagesDemoPage() {
@@ -27,16 +25,15 @@ export default function MessagesDemoPage() {
     <div>
       <h1>Messages</h1>
       <p>
-        <code>Messages</code> looks up either <code>searchParams.error</code>{" "}
-        or <code>searchParams.success</code> in a caller-supplied{" "}
+        <code>Messages</code> looks up either <code>searchParams.error</code> or{" "}
+        <code>searchParams.success</code> in a caller-supplied{" "}
         <code>messages</code> map and renders the result as an{" "}
         <code>AlertNavigateOnClose</code> (danger for errors, success for
-        successes). It renders nothing if neither param is set, or if the
-        param value isn&apos;t a key in the map.
+        successes). It renders nothing if neither param is set, or if the param
+        value isn&apos;t a key in the map.
       </p>
       <p>
-        Try it:{" "}
-        <Link href="/messages?success=saved">?success=saved</Link>,{" "}
+        Try it: <Link href="/messages?success=saved">?success=saved</Link>,{" "}
         <Link href="/messages?success=deleted">?success=deleted</Link>,{" "}
         <Link href="/messages?error=not-found">?error=not-found</Link>, or{" "}
         <Link href="/messages?error=forbidden">?error=forbidden</Link>.

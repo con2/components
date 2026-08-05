@@ -26,9 +26,15 @@ export default function DateTimeInputPage() {
           name="deadline"
           locale="en-US"
           defaultValue="2026-09-01T10:00:00Z"
-          dateRange={{ start: "2026-08-01T00:00:00Z", end: "2026-08-31T23:59:59Z" }}
+          dateRange={{
+            start: "2026-08-01T00:00:00Z",
+            end: "2026-08-31T23:59:59Z",
+          }}
           defaultTimezone="Europe/Helsinki"
-          messages={{ dateOutOfRange: "The selected date is outside the registration window." }}
+          messages={{
+            dateOutOfRange:
+              "The selected date is outside the registration window.",
+          }}
         />
       </form>
 

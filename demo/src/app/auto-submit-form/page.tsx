@@ -32,11 +32,11 @@ export default function AutoSubmitFormPage() {
     <div>
       <h1>AutoSubmitForm</h1>
       <p>
-        This form submits itself whenever any field inside it changes (via
-        the native onChange event bubbling up), instead of requiring an
-        explicit submit button. Try changing the select below - the page
-        navigates to <code>?sort=...</code>, and the select&apos;s value is
-        read back from that query parameter on load.
+        This form submits itself whenever any field inside it changes (via the
+        native onChange event bubbling up), instead of requiring an explicit
+        submit button. Try changing the select below - the page navigates to{" "}
+        <code>?sort=...</code>, and the select&apos;s value is read back from
+        that query parameter on load.
       </p>
       <Suspense fallback={null}>
         <AutoSubmitFormDemo />

@@ -1,12 +1,8 @@
 import { Temporal } from "@js-temporal/polyfill";
 import { toZonedDateTime, defaultTimezone } from "../helpers/temporal";
-import { defaultDateTimeOptions, formatDateTime } from "./FormattedDateTime";
+import { formatDateTime } from "./FormattedDateTime";
 
-type DateTimeValue =
-  | Date
-  | Temporal.Instant
-  | Temporal.ZonedDateTime
-  | string;
+type DateTimeValue = Date | Temporal.Instant | Temporal.ZonedDateTime | string;
 
 const defaultOptions: Intl.DateTimeFormatOptions = {
   dateStyle: "full",
@@ -82,11 +78,11 @@ export function FormattedDateTimeRange({
     : "";
 
   const formattedDuration =
-    start && end && includeDuration
-      ? formatDuration(start, end, timezone)
-      : "";
+    start && end && includeDuration ? formatDuration(start, end, timezone) : "";
 
-  const startIso = start ? toZonedDateTime(start, timezone).toString() : undefined;
+  const startIso = start
+    ? toZonedDateTime(start, timezone).toString()
+    : undefined;
   const endIso = end ? toZonedDateTime(end, timezone).toString() : undefined;
 
   return (

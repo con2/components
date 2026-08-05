@@ -7,9 +7,9 @@ export default function SubmitButtonPage() {
       <p>
         SubmitButton relies on <code>useFormStatus()</code>, so it must be
         rendered inside a <code>&lt;form&gt;</code>. This page only shows the
-        idle state — the pending spinner only appears while React is
-        actually submitting the form (e.g. via a Server Action), which can&apos;t
-        be demonstrated on a static page.
+        idle state — the pending spinner only appears while React is actually
+        submitting the form (e.g. via a Server Action), which can&apos;t be
+        demonstrated on a static page.
       </p>
 
       <form className="d-flex gap-2 mb-3">
@@ -17,7 +17,10 @@ export default function SubmitButtonPage() {
       </form>
 
       <form className="d-flex gap-2 mb-3">
-        <SubmitButton variant="danger" confirmationMessage="Are you sure you want to delete this?">
+        <SubmitButton
+          variant="danger"
+          confirmationMessage="Are you sure you want to delete this?"
+        >
           Delete
         </SubmitButton>
       </form>

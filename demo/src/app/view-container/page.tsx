@@ -6,8 +6,8 @@ export default function ViewContainerDemoPage() {
       <h1>ViewContainer</h1>
       <p>
         <code>ViewContainer</code> wraps its children in a Bootstrap{" "}
-        <code>&lt;main class=&quot;container mt-4 mb-4&quot;&gt;</code>. The
-        box below shows the resulting element (nested here inside the demo
+        <code>&lt;main class=&quot;container mt-4 mb-4&quot;&gt;</code>. The box
+        below shows the resulting element (nested here inside the demo
         layout&apos;s own container, so the margin is only visible relative to
         this box).
       </p>

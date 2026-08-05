@@ -16,7 +16,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "peerDependencies": {
     "bootstrap": "^5.3.0",
@@ -37,6 +38,11 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/github": "^11.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.3",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@types/node": "^26.1.2",
@@ -53,6 +59,7 @@
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.8",
     "sass": "^1.102.0",
+    "semantic-release": "^24.2.1",
     "typescript": "^5.9.3",
     "vitest": "^4.1.0"
   },

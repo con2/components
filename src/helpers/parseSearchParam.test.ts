@@ -33,9 +33,7 @@ describe("parseSearchParam", () => {
   });
 
   it("returns defaults when array value includes an empty string", () => {
-    expect(parseSearchParam(["GREEN", ""], options)).toEqual(
-      options.defaults,
-    );
+    expect(parseSearchParam(["GREEN", ""], options)).toEqual(options.defaults);
   });
 
   it("returns all values when value includes ALL", () => {

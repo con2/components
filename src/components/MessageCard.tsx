@@ -1,7 +1,14 @@
 "use client";
 
 import { ReactNode } from "react";
-import { Button, Card, CardBody, CardText, CardTitle, Container } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardText,
+  CardTitle,
+  Container,
+} from "react-bootstrap";
 
 interface Action {
   label: string;
@@ -34,11 +41,13 @@ export default function MessageCard({
     <Card className={className}>
       <CardBody>
         <CardTitle>{title}</CardTitle>
-        <CardText className={action ? "mb-4" : undefined}>
-          {message}
-        </CardText>
+        <CardText className={action ? "mb-4" : undefined}>{message}</CardText>
         {action && (
-          <Button variant="primary" onClick={action.onAction} href={action.href}>
+          <Button
+            variant="primary"
+            onClick={action.onAction}
+            href={action.href}
+          >
             {action.label}
           </Button>
         )}

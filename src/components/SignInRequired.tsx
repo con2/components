@@ -22,10 +22,7 @@ export default function SignInRequired({
     <div className="container mt-4">
       <h1>{messages.title}</h1>
       <p>{messages.message}</p>
-      <button
-        onClick={() => signIn(providerId)}
-        className="btn btn-primary"
-      >
+      <button onClick={() => signIn(providerId)} className="btn btn-primary">
         {messages.signIn}…
       </button>
     </div>

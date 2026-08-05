@@ -44,8 +44,6 @@ describe("ViewHeadingActions", () => {
         <button>Do it</button>
       </ViewHeadingActions>,
     );
-    expect(
-      screen.getByRole("button", { name: "Do it" }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Do it" })).toBeInTheDocument();
   });
 });

@@ -22,10 +22,7 @@ function makeColumn(overrides: Partial<Column<Row>> = {}): Column<Row> {
 // cannot infer through — it falls back to `Column<unknown>`. Pin the
 // generics explicitly via small typed wrappers instead.
 function callCellContents(column: Column<Row>, row: Row): ReactNode {
-  return defaultCellContents.call<Column<Row>, [Row], ReactNode>(
-    column,
-    row,
-  );
+  return defaultCellContents.call<Column<Row>, [Row], ReactNode>(column, row);
 }
 
 function callCellElement(
@@ -44,7 +41,13 @@ describe("defaultCellContents", () => {
   it("stringifies the value at the column's slug", () => {
     const column = makeColumn({ slug: "count" });
     const row: Row = { name: "Alice", count: 5 };
-    render(<table><tbody><tr>{callCellContents(column, row)}</tr></tbody></table>);
+    render(
+      <table>
+        <tbody>
+          <tr>{callCellContents(column, row)}</tr>
+        </tbody>
+      </table>,
+    );
     expect(screen.getByText("5")).toBeInTheDocument();
   });
 
@@ -52,7 +55,15 @@ describe("defaultCellContents", () => {
     const column = makeColumn({ slug: "count" });
     const row: Row = { name: "Alice", count: null };
     const contents = callCellContents(column, row);
-    render(<table><tbody><tr><td data-testid="cell">{contents}</td></tr></tbody></table>);
+    render(
+      <table>
+        <tbody>
+          <tr>
+            <td data-testid="cell">{contents}</td>
+          </tr>
+        </tbody>
+      </table>,
+    );
     expect(screen.getByTestId("cell")).toHaveTextContent("");
   });
 
@@ -60,7 +71,15 @@ describe("defaultCellContents", () => {
     const column = makeColumn({ slug: "missing" as any });
     const row = { name: "Alice" } as any;
     const contents = callCellContents(column, row);
-    render(<table><tbody><tr><td data-testid="cell">{contents}</td></tr></tbody></table>);
+    render(
+      <table>
+        <tbody>
+          <tr>
+            <td data-testid="cell">{contents}</td>
+          </tr>
+        </tbody>
+      </table>,
+    );
     expect(screen.getByTestId("cell")).toHaveTextContent("");
   });
 });
@@ -71,7 +90,9 @@ describe("defaultCellElement", () => {
     render(
       <table>
         <tbody>
-          <tr>{callCellElement(column, { name: "Alice", count: 1 }, "Alice")}</tr>
+          <tr>
+            {callCellElement(column, { name: "Alice", count: 1 }, "Alice")}
+          </tr>
         </tbody>
       </table>,
     );
@@ -85,7 +106,9 @@ describe("defaultCellElement", () => {
     render(
       <table>
         <tbody>
-          <tr>{callCellElement(column, { name: "Alice", count: 1 }, "Alice")}</tr>
+          <tr>
+            {callCellElement(column, { name: "Alice", count: 1 }, "Alice")}
+          </tr>
         </tbody>
       </table>,
     );
@@ -99,7 +122,9 @@ describe("defaultCellElement", () => {
     render(
       <table>
         <tbody>
-          <tr>{callCellElement(column, { name: "Alice", count: 1 }, "Alice")}</tr>
+          <tr>
+            {callCellElement(column, { name: "Alice", count: 1 }, "Alice")}
+          </tr>
         </tbody>
       </table>,
     );
@@ -112,7 +137,9 @@ describe("defaultCellElement", () => {
     render(
       <table>
         <tbody>
-          <tr>{callCellElement(column, { name: "Alice", count: 1 }, "Alice")}</tr>
+          <tr>
+            {callCellElement(column, { name: "Alice", count: 1 }, "Alice")}
+          </tr>
         </tbody>
       </table>,
     );

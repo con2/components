@@ -6,9 +6,9 @@ export default function MaybeExternalLinkPage() {
       <h1>MaybeExternalLink</h1>
       <p>
         Renders a Next.js <code>{"<Link>"}</code> for hrefs starting with{" "}
-        <code>/</code> (internal), or a plain <code>{"<a target=\"_blank\">"}</code>{" "}
-        with an appended <code>OpenInNewTab</code> icon for anything else
-        (external).
+        <code>/</code> (internal), or a plain{" "}
+        <code>{'<a target="_blank">'}</code> with an appended{" "}
+        <code>OpenInNewTab</code> icon for anything else (external).
       </p>
       <div className="row">
         <div className="col-md-6">

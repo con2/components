@@ -5,8 +5,8 @@ export default function PatternTextInputPage() {
     <div>
       <h1>PatternTextInput</h1>
       <p>
-        A single-line text input that shows a custom validity message when
-        the value does not match the given <code>pattern</code>. Try typing
+        A single-line text input that shows a custom validity message when the
+        value does not match the given <code>pattern</code>. Try typing
         something other than digits below and submit the form.
       </p>
       <form className="mb-3">

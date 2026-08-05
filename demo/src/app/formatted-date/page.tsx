@@ -14,9 +14,9 @@ export default function FormattedDatePage() {
       <p>
         Accepts a <code>Date</code>, <code>Temporal.PlainDate</code>, or ISO
         date string via <code>date</code>; renders inside a{" "}
-        <code>{"<time>"}</code> by default (override with <code>as</code>,
-        e.g. <code>as={"{Fragment}"}</code> to avoid the wrapper, useful
-        inside <code>{"<option>"}</code>).
+        <code>{"<time>"}</code> by default (override with <code>as</code>, e.g.{" "}
+        <code>as={"{Fragment}"}</code> to avoid the wrapper, useful inside{" "}
+        <code>{"<option>"}</code>).
       </p>
       <ul>
         <li>
@@ -32,8 +32,8 @@ export default function FormattedDatePage() {
           <FormattedDate locale="fi" date={plainDate} />
         </li>
         <li>
-          locale=&quot;fi&quot;, date=Date (interpreted in{" "}
-          <code>timezone</code>, default Europe/Helsinki):{" "}
+          locale=&quot;fi&quot;, date=Date (interpreted in <code>timezone</code>
+          , default Europe/Helsinki):{" "}
           <FormattedDate locale="fi" date={jsDate} />
         </li>
         <li>

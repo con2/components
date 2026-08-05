@@ -22,7 +22,12 @@ export default function InterceptingRouteModalPage() {
         <label className="form-label" htmlFor="comment">
           Comment
         </label>
-        <input id="comment" name="comment" type="text" className="form-control" />
+        <input
+          id="comment"
+          name="comment"
+          type="text"
+          className="form-control"
+        />
       </InterceptingRouteModal>
     </div>
   );
