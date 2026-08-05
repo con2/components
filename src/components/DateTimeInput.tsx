@@ -5,16 +5,19 @@ import { useCallback, useState } from "react";
 import type { DayButtonProps } from "react-day-picker";
 import { DayPicker } from "react-day-picker";
 
-interface Messages {
-  dateOutOfRange: string;
-}
+/// This message is generic and not worth asking every caller to supply a
+/// translation for - inlined here instead of a `messages` prop.
+const dateOutOfRangeMessages: Record<string, string> = {
+  en: "This date is outside the allowed range.",
+  fi: "Tämä päivämäärä on sallitun aikavälin ulkopuolella.",
+  sv: "Detta datum ligger utanför det tillåtna intervallet.",
+};
 
 interface DateTimeInputProps {
   id?: string;
   name: string;
   defaultValue?: string;
   locale: string;
-  messages: Messages;
   required?: boolean;
   readOnly?: boolean;
   dateRange?: { start: string; end: string };
@@ -79,7 +82,6 @@ export default function DateTimeInput({
   name,
   defaultValue,
   locale,
-  messages,
   required,
   readOnly,
   dateRange,
@@ -251,7 +253,9 @@ export default function DateTimeInput({
       <input type="hidden" name={name} value={hiddenValue} />
 
       {isOutOfRange && (
-        <div className="text-warning small mt-1">{messages.dateOutOfRange}</div>
+        <div className="text-warning small mt-1">
+          {dateOutOfRangeMessages[locale] ?? dateOutOfRangeMessages.en}
+        </div>
       )}
     </div>
   );

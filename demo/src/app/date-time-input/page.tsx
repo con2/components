@@ -6,6 +6,10 @@ export default function DateTimeInputPage() {
   return (
     <div>
       <h1>DateTimeInput</h1>
+      <p>
+        The out-of-range warning is a generic message inlined by{" "}
+        <code>locale</code> (fi/en/sv) rather than a <code>messages</code> prop.
+      </p>
 
       <h2>Basic</h2>
       <form className="mb-4">
@@ -15,7 +19,6 @@ export default function DateTimeInputPage() {
           locale="en-US"
           defaultValue="2026-08-15T14:30:00Z"
           defaultTimezone="Europe/Helsinki"
-          messages={{ dateOutOfRange: "The selected date is out of range." }}
         />
       </form>
 
@@ -31,10 +34,6 @@ export default function DateTimeInputPage() {
             end: "2026-08-31T23:59:59Z",
           }}
           defaultTimezone="Europe/Helsinki"
-          messages={{
-            dateOutOfRange:
-              "The selected date is outside the registration window.",
-          }}
         />
       </form>
 
@@ -47,7 +46,6 @@ export default function DateTimeInputPage() {
           defaultValue="2026-08-15T14:30:00Z"
           defaultTimezone="Europe/Helsinki"
           readOnly
-          messages={{ dateOutOfRange: "The selected date is out of range." }}
         />
       </form>
     </div>

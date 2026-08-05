@@ -24,6 +24,24 @@ Distribution is git-based (`"@con2/components": "github:con2/components#<tag>"`)
 
 Every component that renders user-visible text takes a `messages` prop — a plain object typed by a **local interface defined in the component's own file**, narrowed to exactly the keys it reads. Never import an app's `Translations` type into this library (that coupling is exactly what this library exists to eliminate). Date/locale-aware components additionally take an explicit `locale: string` prop. App-specific config (timezone, base URLs, auth provider id, etc.) must be an explicit prop with a sensible default — never read from either app's `@/config`.
 
+**Never give a `messages` field a function type.** Function values can't cross a Server -> Client Component boundary, and both consuming apps commonly pass their whole `translations` object down into client components as a single prop — so a function-typed message field is a live crash waiting to happen at whichever call site does that (this actually happened: see `TextArea`'s history).
+
+### The inline-generic-message pattern
+
+Some messages are the same regardless of the calling context — "No file uploaded", a character-limit warning, an out-of-range warning. Asking every caller to supply a translation for these is pure friction with no payoff, and (per above) a function-typed shortcut to reduce that friction just trades it for a crash. The fix: skip `messages` for that field entirely and inline a small `Record<string, string>` (or `Record<string, {...}>`) table keyed by locale directly in the component's own module, falling back to `en` for an unrecognized locale (`table[locale] ?? table.en`). The component takes an explicit `locale: string` prop instead. Extend the table with `fi`/`en`/`sv` — the union of locales either consuming app supports — even if only one app currently uses the component.
+
+Apply this per-field, not per-component: a component can have _both_ an inlined generic message and a caller-supplied `messages` prop for the fields that genuinely vary by context. Current examples:
+
+- **Fully inlined** (no `messages` prop at all): `TextArea` (character-limit warning), `DateTimeInput` (out-of-range warning), `UploadedFileCards` (empty-state text), `MarkdownEditor` (a toolbar aria-label, via a plain string not even wrapped in a `messages` object originally).
+- **Partially inlined** (`messages` prop kept for contextual fields, one generic field inlined): `SignInRequired` (`messages.title`/`message` explain _why_ sign-in is required and vary per call site; the "Sign in" button label is inlined, driven by a single shared translation key with no per-call-site override), `DimensionFilters` (`messages.searchPlaceholder` varies by what's being searched; the `<noscript>` fallback button's "Filter" label is inlined).
+
+**The test is real usage, not intuition — check before inlining, don't just eyeball it.** Two things that _looked_ as generic as "No file uploaded" at a glance turned out not to be, once actually checked against both apps' translation files:
+
+- `ModalButton`/`InterceptingRouteModal`'s `cancel`/`submit` — kompassi has dozens of real call sites overriding `submit` with action-specific verbs: "Generate", "Revoke", "Create quota", "Cancel order and request refund", "Close without accepting". A modal's confirm button should say what it _does_, not just "Submit". Both stayed a `messages: {cancel, submit}` prop.
+- `CopyButton`'s `success` badge — assumed to always be "Copied!", but kompassi's real usage is a full sentence naming what got copied: "A link to the survey has been copied to clipboard." Stayed a `messages: {title, tooltip, success}` prop.
+
+Both were briefly (wrongly) inlined during development before this check caught it. Before inlining a field, grep both consuming apps for every real call site's actual value, not just one - a single shared translation key used identically everywhere is safe to inline; several independently-written values, even if the first one or two you check happen to look generic, are not. "No consumer currently overrides it" is what you're checking for, not "it seems like it wouldn't need to be."
+
 ## The demo app must stay in sync
 
 **This is a hard requirement, not a nice-to-have.** The `demo/` app is how a human (or another agent) can actually see a component before trusting it. A library where the demo has silently rotted is worse than no demo at all — it actively misleads.

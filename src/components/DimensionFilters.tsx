@@ -18,13 +18,21 @@ export interface Dimension {
 
 export interface DimensionFiltersMessages {
   searchPlaceholder?: string;
-  filter?: string;
 }
+
+/// This message is generic and not worth asking every caller to supply a
+/// translation for - inlined here instead of being part of `messages`.
+const filterMessages: Record<string, string> = {
+  en: "Filter",
+  fi: "Suodata",
+  sv: "Filtrera",
+};
 
 interface Props {
   className?: string;
   search?: boolean;
   dimensions: Dimension[];
+  locale?: string;
   messages?: DimensionFiltersMessages;
 }
 
@@ -33,7 +41,7 @@ interface Props {
 /// Can be used in all use cases that follow the dimension pattern.
 /// Gracefully degrades to showing a submit button when JavaScript is disabled.
 export function DimensionFilters(props: Props) {
-  const { dimensions, search, messages } = props;
+  const { dimensions, search, messages, locale = "en" } = props;
   const searchParams = useSearchParams();
   const searchTerm = search ? (searchParams.get("search") ?? "") : "";
   const { replace } = useRouter();
@@ -145,7 +153,7 @@ export function DimensionFilters(props: Props) {
       )}
       <noscript>
         <button type="submit" className="btn btn-sm btn-primary">
-          {messages?.filter || "Submit"}
+          {filterMessages[locale] ?? filterMessages.en}
         </button>
       </noscript>
     </form>

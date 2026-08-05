@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 interface CopyButtonMessages {
   title: string;
   tooltip?: string;
+  /// Not generic - real usage writes a full sentence describing what was
+  /// copied (eg. "A link to the survey has been copied to clipboard."), so
+  /// this stays a `messages` field rather than an inlined locale table.
   success: string;
 }
 
@@ -15,7 +18,7 @@ interface CopyButtonProps {
 }
 
 /// A button that copies `data` to the clipboard when clicked, showing a
-/// brief self-fading "Copied!" indicator instead of alert().
+/// brief self-fading success indicator instead of alert().
 export function CopyButton({
   data,
   className = "btn btn-outline-primary",

@@ -39,16 +39,17 @@ export default function DimensionFiltersPage() {
         Presents each dimension as a dropdown and a free-text search field;
         selecting a value updates the page&apos;s search params (soft navigation
         via <code>router.replace</code>, with a <code>{"<noscript>"}</code>{" "}
-        submit button fallback).
+        submit button fallback). That fallback button&apos;s label is generic
+        and inlined by <code>locale</code> (fi/en/sv); only{" "}
+        <code>searchPlaceholder</code> stays a <code>messages</code> field,
+        since what you&apos;re searching varies by context.
       </p>
       <Suspense fallback={<p>Loading filters…</p>}>
         <DimensionFilters
           dimensions={dimensions}
           search
-          messages={{
-            searchPlaceholder: "Search programme",
-            filter: "Filter",
-          }}
+          locale="en"
+          messages={{ searchPlaceholder: "Search programme" }}
         />
       </Suspense>
     </div>

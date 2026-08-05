@@ -21,7 +21,7 @@ export default function MarkdownEditorPage() {
           defaultValue={
             "# Welcome\n\nThis is **bold** text with a [link](https://example.com) and:\n\n- one\n- two\n- three"
           }
-          insertHeadingLabel="Insert heading"
+          locale="en"
           rows={10}
         />
       </form>

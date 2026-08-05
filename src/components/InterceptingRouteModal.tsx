@@ -14,11 +14,13 @@ interface Props {
   title: ReactNode;
   children?: ReactNode;
   action?(formData: FormData): void;
+  /// Not generic like most cancel/submit pairs in this library - see
+  /// ModalButton's real-world usage for why this stays a `messages` prop
+  /// rather than an inlined locale table.
   messages: Messages;
 }
 
 // TODO make server component, split Modal stuff to separate client component
-// client component calling getTranslations includes whole set of translations in bundle
 export default function InterceptingRouteModal({
   title,
   children,

@@ -3,10 +3,21 @@
 import { useCallback, useState } from "react";
 import { FormControl } from "react-bootstrap";
 
-interface Messages {
-  /** Custom validity message shown when the value exceeds `maxLength`. */
-  maxLengthExceeded: (maxLength: number, currentLength: number) => string;
-}
+/// This message is generic and not worth asking every caller to supply a
+/// translation for - inlined here instead of a `messages` prop. Not a
+/// Server->Client Component boundary concern either way, since this object
+/// never leaves this module (it's not a prop).
+const maxLengthExceededMessages: Record<
+  string,
+  (maxLength: number, currentLength: number) => string
+> = {
+  en: (maxLength, currentLength) =>
+    `Maximum length is ${maxLength} characters (current: ${currentLength}).`,
+  fi: (maxLength, currentLength) =>
+    `Enimmäispituus on ${maxLength} merkkiä (nykyinen: ${currentLength}).`,
+  sv: (maxLength, currentLength) =>
+    `Maximilängden är ${maxLength} tecken (nuvarande: ${currentLength}).`,
+};
 
 interface Props {
   id?: string;
@@ -15,7 +26,7 @@ interface Props {
   defaultValue?: string;
   readOnly?: boolean;
   maxLength: number;
-  messages: Messages;
+  locale: string;
 }
 
 export default function TextArea({
@@ -25,7 +36,7 @@ export default function TextArea({
   defaultValue,
   readOnly,
   maxLength,
-  messages,
+  locale,
 }: Props) {
   const [length, setLength] = useState(defaultValue?.length ?? 0);
 
@@ -34,14 +45,14 @@ export default function TextArea({
       const el = e.target;
       setLength(el.value.length);
       if (el.value.length > maxLength) {
-        el.setCustomValidity(
-          messages.maxLengthExceeded(maxLength, el.value.length),
-        );
+        const formatMessage =
+          maxLengthExceededMessages[locale] ?? maxLengthExceededMessages.en;
+        el.setCustomValidity(formatMessage(maxLength, el.value.length));
       } else {
         el.setCustomValidity("");
       }
     },
-    [maxLength, messages],
+    [maxLength, locale],
   );
 
   const atLimit = length >= maxLength;

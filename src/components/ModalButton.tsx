@@ -16,6 +16,10 @@ interface Props {
   labelTitle?: string;
   children?: ReactNode;
   action?(formData: FormData): void;
+  /// Not generic like most cancel/submit pairs in this library - kompassi's
+  /// real usage extensively overrides these per action ("Generate", "Revoke",
+  /// "Create quota", "Cancel order and request refund", ...), so this stays a
+  /// `messages` prop rather than an inlined locale table.
   messages: Messages;
   disabled?: boolean;
   className?: string;

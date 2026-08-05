@@ -1,5 +1,3 @@
-"use client";
-
 import { TextArea } from "@con2/components";
 
 export default function TextAreaPage() {
@@ -11,6 +9,12 @@ export default function TextAreaPage() {
         once the value exceeds <code>maxLength</code>. This demo uses a low
         limit (20 characters) so the message is easy to trigger by typing.
       </p>
+      <p>
+        The validity message is generic enough that it isn&apos;t worth a{" "}
+        <code>messages</code> prop - <code>TextArea</code> carries its own
+        inline fi/en/sv translations and just takes a <code>locale</code> prop
+        to pick one, defaulting to English for an unrecognized locale.
+      </p>
       <form>
         <label htmlFor="bio" className="form-label">
           Short bio (max 20 characters)
@@ -21,10 +25,7 @@ export default function TextAreaPage() {
           rows={3}
           maxLength={20}
           defaultValue="Hello there"
-          messages={{
-            maxLengthExceeded: (max, current) =>
-              `Please shorten your text: ${current}/${max} characters used.`,
-          }}
+          locale="en"
         />
       </form>
     </div>

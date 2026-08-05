@@ -10,6 +10,14 @@ import { useState } from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 
+/// This label is generic and not worth asking every caller to supply a
+/// translation for - inlined here instead of a required prop.
+const insertHeadingLabels: Record<string, string> = {
+  en: "Insert heading",
+  fi: "Lisää otsikko",
+  sv: "Infoga rubrik",
+};
+
 interface MarkdownEditorProps {
   id?: string;
   name: string;
@@ -17,7 +25,7 @@ interface MarkdownEditorProps {
   required?: boolean;
   readOnly?: boolean;
   rows?: number;
-  insertHeadingLabel: string;
+  locale?: string;
 }
 
 // Keep the toolbar limited to the formatting we actually allow through the backend
@@ -55,8 +63,10 @@ export default function MarkdownEditor({
   required,
   readOnly,
   rows = 10,
-  insertHeadingLabel,
+  locale = "en",
 }: MarkdownEditorProps) {
+  const insertHeadingLabel =
+    insertHeadingLabels[locale] ?? insertHeadingLabels.en;
   const [value, setValue] = useState(defaultValue);
   // The toolbar (~40px) sits above the text area within `height`, so the text area's
   // own minHeight must leave room for it - otherwise its min-height (forced via an
