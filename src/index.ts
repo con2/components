@@ -1,5 +1,6 @@
 export { default as AlertNavigateOnClose } from "./components/AlertNavigateOnClose";
 export { AutoSubmitForm } from "./components/AutoSubmitForm";
+export { default as ClientLink } from "./components/ClientLink";
 export { default as ColorBadge } from "./components/ColorBadge";
 export { CopyButton } from "./components/CopyButton";
 

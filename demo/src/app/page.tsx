@@ -78,6 +78,7 @@ const groups: DemoGroup[] = [
     title: "Links & icons",
     links: [
       { slug: "maybe-external-link", label: "MaybeExternalLink" },
+      { slug: "client-link", label: "ClientLink" },
       { slug: "icons", label: "Icons (InfoCircle, OpenInNewTab, SwapVert)" },
     ],
   },
