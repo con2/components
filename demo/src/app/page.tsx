@@ -89,6 +89,9 @@ export default function DemoIndexPage() {
     <div>
       <h1>@con2/components demo</h1>
       <p>Sample pages for each extracted component.</p>
+      <p>
+        <a href="https://github.com/con2/components">GitHub repo</a>
+      </p>
       {groups.map((group) => (
         <section key={group.title} className="mb-4">
           <h2 className="h5">{group.title}</h2>
