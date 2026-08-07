@@ -1,18 +1,12 @@
 import { Temporal } from "@js-temporal/polyfill";
-import { toPlainDate, defaultTimezone } from "../helpers/temporal";
+import {
+  toPlainDate,
+  defaultTimezone,
+  formatPlainDate,
+} from "../helpers/temporal";
 
-/// The `en` locale uses ISO 8601 (2027-02-06) rather than the ambiguous
-/// M/D/YYYY format `Intl`/`Temporal` would otherwise produce for it.
 export function formatDate(date: Temporal.PlainDate, locale: string): string {
-  if (locale.toLowerCase().startsWith("en")) {
-    return date.toString();
-  }
-
-  return date.toLocaleString(locale, {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-  });
+  return formatPlainDate(date, locale);
 }
 
 interface Props {

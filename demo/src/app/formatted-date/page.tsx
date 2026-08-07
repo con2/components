@@ -16,9 +16,10 @@ export default function FormattedDatePage() {
         date string via <code>date</code>; renders inside a{" "}
         <code>{"<time>"}</code> by default (override with <code>as</code>, e.g.{" "}
         <code>as={"{Fragment}"}</code> to avoid the wrapper, useful inside{" "}
-        <code>{"<option>"}</code>). The <code>en</code> locale renders ISO 8601
-        (e.g. &quot;2026-08-05&quot;) instead of the ambiguous M/D/YYYY format
-        it would otherwise get.
+        <code>{"<option>"}</code>). No <code>Intl</code>: <code>en</code> (and
+        any locale other than <code>fi</code>/<code>sv</code>) renders ISO 8601
+        (&quot;2026-08-05&quot;); <code>fi</code>/<code>sv</code> render{" "}
+        <code>D.M.YYYY</code> (&quot;5.8.2026&quot;), identically.
       </p>
       <ul>
         <li>
@@ -32,6 +33,10 @@ export default function FormattedDatePage() {
         <li>
           locale=&quot;fi&quot;, date=Temporal.PlainDate:{" "}
           <FormattedDate locale="fi" date={plainDate} />
+        </li>
+        <li>
+          locale=&quot;sv&quot;, date=ISO string (identical to fi):{" "}
+          <FormattedDate locale="sv" date={isoDateString} />
         </li>
         <li>
           locale=&quot;fi&quot;, date=Date (interpreted in <code>timezone</code>

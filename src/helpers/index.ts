@@ -20,6 +20,9 @@ export {
   toISODate,
   toISODateNull,
   toISODateEmpty,
+  formatPlainDate,
+  formatTimeOfDay,
+  formatWeekdayAbbreviation,
   morning,
   fromMorning,
   fromMorningNull,
@@ -33,3 +36,4 @@ export {
   uuid7ToZonedDateTime,
   zPlainDateNull,
 } from "./temporal";
+export type { DateTimeValue } from "./temporal";

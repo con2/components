@@ -24,7 +24,6 @@ export type {
 export { formatDate, FormattedDate } from "./components/FormattedDate";
 export { FormattedDateRange } from "./components/FormattedDateRange";
 export {
-  defaultDateTimeOptions,
   formatDateTime,
   FormattedDateTime,
 } from "./components/FormattedDateTime";

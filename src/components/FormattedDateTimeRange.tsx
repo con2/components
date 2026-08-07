@@ -1,13 +1,11 @@
 import { Temporal } from "@js-temporal/polyfill";
-import { toZonedDateTime, defaultTimezone } from "../helpers/temporal";
+import {
+  toZonedDateTime,
+  defaultTimezone,
+  formatTimeOfDay,
+  type DateTimeValue,
+} from "../helpers/temporal";
 import { formatDateTime } from "./FormattedDateTime";
-
-type DateTimeValue = Date | Temporal.Instant | Temporal.ZonedDateTime | string;
-
-const defaultOptions: Intl.DateTimeFormatOptions = {
-  dateStyle: "full",
-  timeStyle: "short",
-};
 
 export function isSameDay(
   start: DateTimeValue,
@@ -51,7 +49,8 @@ interface Props {
   /// inherent timezone (ie. are a `Date`, `Instant` or ISO 8601 string).
   timezone?: Temporal.TimeZoneLike;
   includeDuration?: boolean;
-  options?: Intl.DateTimeFormatOptions;
+  /// Prefix each formatted endpoint with an abbreviated weekday name (eg. "Wed").
+  includeWeekday?: boolean;
 }
 
 export function FormattedDateTimeRange({
@@ -59,22 +58,21 @@ export function FormattedDateTimeRange({
   end,
   locale,
   timezone = defaultTimezone,
-  options = defaultOptions,
   includeDuration = false,
+  includeWeekday = false,
 }: Props) {
+  const sameDay = Boolean(start && end && isSameDay(start, end, timezone));
+
   const formattedStart = start
-    ? formatDateTime(start, locale, options, timezone)
+    ? formatDateTime(start, locale, timezone, includeWeekday)
     : "";
 
-  const endOptions = {
-    ...options,
-    dateStyle:
-      start && end && isSameDay(start, end, timezone)
-        ? undefined
-        : options.dateStyle,
-  };
+  // When both endpoints fall on the same day, the end only needs its time -
+  // the date was already shown by the start.
   const formattedEnd = end
-    ? formatDateTime(end, locale, endOptions, timezone)
+    ? sameDay
+      ? formatTimeOfDay(toZonedDateTime(end, timezone))
+      : formatDateTime(end, locale, timezone, includeWeekday)
     : "";
 
   const formattedDuration =

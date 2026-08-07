@@ -42,9 +42,16 @@ Apply this per-field, not per-component: a component can have _both_ an inlined 
 
 Both were briefly (wrongly) inlined during development before this check caught it. Before inlining a field, grep both consuming apps for every real call site's actual value, not just one - a single shared translation key used identically everywhere is safe to inline; several independently-written values, even if the first one or two you check happen to look generic, are not. "No consumer currently overrides it" is what you're checking for, not "it seems like it wouldn't need to be."
 
-## The `en` locale renders dates as ISO 8601
+## Date/time rendering is locale-fixed, not `Intl`-driven
 
-Every date-rendering component/function (`FormattedDate`/`formatDate`, `FormattedDateRange`, `FormattedDateTime`/`formatDateTime`, `FormattedDateTimeRange`, `DateTimeInput`) renders its date component as ISO 8601 (`2027-02-06`) rather than the locale's native format when `locale` starts with `en` (case-insensitively, so `en-US`/`en-GB` are covered too) - `Intl`'s own `en` date format (`2/6/2027`) is ambiguous between day and month. A time component, if present in `options`, is unaffected and still follows the locale/options as normal. `fi`/`sv` are unaffected. A new date-rendering component must follow the same rule.
+This library only ever renders three locales - `fi`, `en`, `sv` - matched verbatim (no regional variants). `fi`/`sv` share one format; any other value, including a regional variant like `en-US`, falls back to `en`. Given this fixed, tiny locale set, a locale-aware `Intl.DateTimeFormat`/`toLocaleString` call is unnecessary machinery - `formatPlainDate`, `formatTimeOfDay`, and `formatWeekdayAbbreviation` (`src/helpers/temporal.ts`) build the strings by hand instead:
+
+- Dates: `en` (and fallback) renders ISO 8601 (`2027-02-06`); `fi`/`sv` render `D.M.YYYY` (`6.2.2027`, no leading zeroes).
+- Times: always a zero-padded 24h clock (`18:00`) - none of the three locales use a 12h clock in this library's UI.
+- `FormattedDateTime`/`FormattedDateTimeRange` take an `includeWeekday` boolean instead of an `Intl.DateTimeFormatOptions`-style `options` prop, prefixing an abbreviated weekday name.
+- `FormattedDateRange`'s compact collapsing (`"1.–3.5.2024"`) applies to `fi`/`sv`; any other locale gets its two endpoints joined by a dash wrapped in non-breaking spaces (`"2026-08-01 – 2026-08-03"`) so the dash doesn't get lost among the ISO date's own hyphens.
+
+A new date/time-rendering component must follow the same fixed-format, no-`Intl` approach.
 
 ## The demo app must stay in sync
 

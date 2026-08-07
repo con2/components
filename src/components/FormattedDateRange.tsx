@@ -57,7 +57,17 @@ export function FormattedDateRange({
     );
   }
 
-  if (locale === "fi" && startDay.year === endDay.year) {
+  let collapsible: boolean;
+  switch (locale) {
+    case "fi":
+    case "sv":
+      collapsible = true;
+      break;
+    default:
+      collapsible = false;
+  }
+
+  if (collapsible && startDay.year === endDay.year) {
     if (startDay.month === endDay.month) {
       // Same month and year: "1.–3.5.2024"
       return (
@@ -99,7 +109,7 @@ export function FormattedDateRange({
         timezone={timezone}
         as={Component}
       />
-      –
+      {collapsible ? "–" : " – "}
       <FormattedDate
         locale={locale}
         date={end}

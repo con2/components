@@ -4,6 +4,7 @@ import { Temporal } from "@js-temporal/polyfill";
 import { useCallback, useState } from "react";
 import type { DayButtonProps } from "react-day-picker";
 import { DayPicker } from "react-day-picker";
+import { formatPlainDate } from "../helpers/temporal";
 
 /// This message is generic and not worth asking every caller to supply a
 /// translation for - inlined here instead of a `messages` prop.
@@ -38,21 +39,13 @@ function parseIsoToTime(isoValue: string, timezone: string): string {
   return `${h}:${m}`;
 }
 
-/// The `en` locale uses ISO 8601 (2027-02-06) rather than the ambiguous
-/// MM/DD/YYYY format `Intl` would otherwise produce for it.
 function formatDateForDisplay(date: Date, locale: string): string {
-  if (locale.toLowerCase().startsWith("en")) {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const d = String(date.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-  }
-
-  return new Intl.DateTimeFormat(locale, {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(date);
+  const plainDate = Temporal.PlainDate.from({
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+  });
+  return formatPlainDate(plainDate, locale);
 }
 
 function toHiddenValue(date: Date | undefined, time: string): string {
