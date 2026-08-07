@@ -7,7 +7,9 @@ export default function FormattedDateRangePage() {
       <p>
         Renders <code>start</code>–<code>end</code> as a single date when they
         fall on the same day, and collapses shared year/month for the{" "}
-        <code>fi</code> locale (e.g. &quot;1.–3.5.2026&quot;).
+        <code>fi</code> locale (e.g. &quot;1.–3.5.2026&quot;). Like{" "}
+        <code>FormattedDate</code>, the <code>en</code> locale renders each date
+        as ISO 8601.
       </p>
       <ul>
         <li>

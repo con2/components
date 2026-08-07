@@ -19,7 +19,10 @@ export default function FormattedDateTimePage() {
         Accepts <code>Date</code>, <code>Temporal.Instant</code>,{" "}
         <code>Temporal.ZonedDateTime</code>, or an ISO 8601 string via{" "}
         <code>value</code>; formats using <code>options</code> (default{" "}
-        <code>{'{ dateStyle: "medium", timeStyle: "short" }'}</code>).
+        <code>{'{ dateStyle: "medium", timeStyle: "short" }'}</code>). The{" "}
+        <code>en</code> locale renders its date component as ISO 8601 (e.g.
+        &quot;2026-08-05, 8:30 PM&quot;) instead of the locale&apos;s native
+        date format; any time component still follows <code>options</code>.
       </p>
       <ul>
         <li>

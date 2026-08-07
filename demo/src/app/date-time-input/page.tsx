@@ -9,6 +9,9 @@ export default function DateTimeInputPage() {
       <p>
         The out-of-range warning is a generic message inlined by{" "}
         <code>locale</code> (fi/en/sv) rather than a <code>messages</code> prop.
+        The date button label renders ISO 8601 (e.g. &quot;2026-08-15&quot;) for
+        the <code>en</code>/<code>en-US</code> locale instead of the
+        locale&apos;s native date format.
       </p>
 
       <h2>Basic</h2>

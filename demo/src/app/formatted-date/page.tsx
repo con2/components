@@ -16,7 +16,9 @@ export default function FormattedDatePage() {
         date string via <code>date</code>; renders inside a{" "}
         <code>{"<time>"}</code> by default (override with <code>as</code>, e.g.{" "}
         <code>as={"{Fragment}"}</code> to avoid the wrapper, useful inside{" "}
-        <code>{"<option>"}</code>).
+        <code>{"<option>"}</code>). The <code>en</code> locale renders ISO 8601
+        (e.g. &quot;2026-08-05&quot;) instead of the ambiguous M/D/YYYY format
+        it would otherwise get.
       </p>
       <ul>
         <li>

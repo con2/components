@@ -18,7 +18,8 @@ export default function FormattedDateTimeRangePage() {
         Renders <code>start</code>–<code>end</code>; when both fall on the same
         day (per <code>isSameDay</code>), the end&apos;s date is omitted (only
         its time is shown). <code>includeDuration</code> appends a formatted
-        duration in parentheses.
+        duration in parentheses. Like <code>FormattedDateTime</code>, the{" "}
+        <code>en</code> locale renders each date component as ISO 8601.
       </p>
       <ul>
         <li>

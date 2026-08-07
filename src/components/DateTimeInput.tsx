@@ -38,7 +38,16 @@ function parseIsoToTime(isoValue: string, timezone: string): string {
   return `${h}:${m}`;
 }
 
+/// The `en` locale uses ISO 8601 (2027-02-06) rather than the ambiguous
+/// MM/DD/YYYY format `Intl` would otherwise produce for it.
 function formatDateForDisplay(date: Date, locale: string): string {
+  if (locale.toLowerCase().startsWith("en")) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  }
+
   return new Intl.DateTimeFormat(locale, {
     year: "numeric",
     month: "2-digit",

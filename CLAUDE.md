@@ -42,6 +42,10 @@ Apply this per-field, not per-component: a component can have _both_ an inlined 
 
 Both were briefly (wrongly) inlined during development before this check caught it. Before inlining a field, grep both consuming apps for every real call site's actual value, not just one - a single shared translation key used identically everywhere is safe to inline; several independently-written values, even if the first one or two you check happen to look generic, are not. "No consumer currently overrides it" is what you're checking for, not "it seems like it wouldn't need to be."
 
+## The `en` locale renders dates as ISO 8601
+
+Every date-rendering component/function (`FormattedDate`/`formatDate`, `FormattedDateRange`, `FormattedDateTime`/`formatDateTime`, `FormattedDateTimeRange`, `DateTimeInput`) renders its date component as ISO 8601 (`2027-02-06`) rather than the locale's native format when `locale` starts with `en` (case-insensitively, so `en-US`/`en-GB` are covered too) - `Intl`'s own `en` date format (`2/6/2027`) is ambiguous between day and month. A time component, if present in `options`, is unaffected and still follows the locale/options as normal. `fi`/`sv` are unaffected. A new date-rendering component must follow the same rule.
+
 ## The demo app must stay in sync
 
 **This is a hard requirement, not a nice-to-have.** The `demo/` app is how a human (or another agent) can actually see a component before trusting it. A library where the demo has silently rotted is worse than no demo at all — it actively misleads.

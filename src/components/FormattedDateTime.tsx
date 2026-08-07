@@ -8,15 +8,77 @@ export const defaultDateTimeOptions: Intl.DateTimeFormatOptions = {
   timeStyle: "short",
 };
 
+const DATE_COMPONENT_KEYS: (keyof Intl.DateTimeFormatOptions)[] = [
+  "dateStyle",
+  "weekday",
+  "era",
+  "year",
+  "month",
+  "day",
+];
+
+const TIME_COMPONENT_KEYS: (keyof Intl.DateTimeFormatOptions)[] = [
+  "timeStyle",
+  "hour",
+  "minute",
+  "second",
+  "fractionalSecondDigits",
+  "hour12",
+  "hourCycle",
+  "timeZoneName",
+];
+
+function hasAnyOption(
+  options: Intl.DateTimeFormatOptions,
+  keys: readonly (keyof Intl.DateTimeFormatOptions)[],
+): boolean {
+  return keys.some((key) => options[key] !== undefined);
+}
+
+function pickOptions(
+  options: Intl.DateTimeFormatOptions,
+  keys: readonly (keyof Intl.DateTimeFormatOptions)[],
+): Intl.DateTimeFormatOptions {
+  const picked: Intl.DateTimeFormatOptions = {};
+  for (const key of keys) {
+    const value = options[key];
+    if (value !== undefined) {
+      Object.assign(picked, { [key]: value });
+    }
+  }
+  return picked;
+}
+
 /// Convert a timestamp (wire format ISO 8601, Date, Instant or ZonedDateTime)
 /// into a human-readable, locale-formatted string.
+///
+/// The `en` locale renders its date component as ISO 8601 (2027-02-06)
+/// rather than the ambiguous M/D/YYYY format `Intl` would otherwise produce
+/// for it; any time component is still formatted per `options`/`locale`.
 export function formatDateTime(
   value: DateTimeValue,
   locale: string,
   options: Intl.DateTimeFormatOptions = defaultDateTimeOptions,
   timezone: Temporal.TimeZoneLike = defaultTimezone,
 ): string {
-  return toZonedDateTime(value, timezone).toLocaleString(locale, options);
+  const zdt = toZonedDateTime(value, timezone);
+
+  if (
+    locale.toLowerCase().startsWith("en") &&
+    hasAnyOption(options, DATE_COMPONENT_KEYS)
+  ) {
+    const isoDate = zdt.toPlainDate().toString();
+    if (!hasAnyOption(options, TIME_COMPONENT_KEYS)) {
+      return isoDate;
+    }
+    const time = zdt.toLocaleString(
+      locale,
+      pickOptions(options, TIME_COMPONENT_KEYS),
+    );
+    return `${isoDate}, ${time}`;
+  }
+
+  return zdt.toLocaleString(locale, options);
 }
 
 interface Props {
@@ -39,7 +101,7 @@ export function FormattedDateTime({
   }
 
   const zdt = toZonedDateTime(value, timezone);
-  const formatted = zdt.toLocaleString(locale, options);
+  const formatted = formatDateTime(value, locale, options, timezone);
 
   return <time dateTime={zdt.toString()}>{formatted}</time>;
 }
