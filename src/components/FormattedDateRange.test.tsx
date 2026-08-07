@@ -21,7 +21,9 @@ describe("FormattedDateRange", () => {
     const { container } = render(
       <FormattedDateRange locale="en" start="2026-08-01" end="2026-08-03" />,
     );
-    expect(container.textContent).toBe("2026-08-01 – 2026-08-03");
+    expect(container.textContent).toBe(
+      "2026-08-01\u00a0\u2013\u00a02026-08-03",
+    );
   });
 
   it("does not collapse a fi range spanning different years", () => {

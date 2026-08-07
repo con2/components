@@ -44,4 +44,30 @@ describe("FormattedDateTimeRange", () => {
     expect(container.textContent).toContain("Wed 2026-08-05");
     expect(container.textContent).toContain("Thu 2026-08-06");
   });
+
+  it("separates endpoints with a non-breaking space around the dash for en", () => {
+    const { container } = render(
+      <FormattedDateTimeRange
+        locale="en"
+        start="2026-08-05T20:00:00Z"
+        end="2026-08-06T06:00:00Z"
+        timezone={timezone}
+      />,
+    );
+    expect(container.textContent).toBe(
+      "2026-08-05 23:00\u00a0\u2013\u00a02026-08-06 09:00",
+    );
+  });
+
+  it("separates endpoints with plain spaces for fi", () => {
+    const { container } = render(
+      <FormattedDateTimeRange
+        locale="fi"
+        start="2026-08-05T20:00:00Z"
+        end="2026-08-06T06:00:00Z"
+        timezone={timezone}
+      />,
+    );
+    expect(container.textContent).toBe("5.8.2026 23:00 – 6.8.2026 09:00");
+  });
 });

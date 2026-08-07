@@ -67,8 +67,6 @@ export function FormattedDateTimeRange({
     ? formatDateTime(start, locale, timezone, includeWeekday)
     : "";
 
-  // When both endpoints fall on the same day, the end only needs its time -
-  // the date was already shown by the start.
   const formattedEnd = end
     ? sameDay
       ? formatTimeOfDay(toZonedDateTime(end, timezone))
@@ -83,10 +81,20 @@ export function FormattedDateTimeRange({
     : undefined;
   const endIso = end ? toZonedDateTime(end, timezone).toString() : undefined;
 
+  let separator: string;
+  switch (locale) {
+    case "fi":
+    case "sv":
+      separator = " – ";
+      break;
+    default:
+      separator = "\u00a0\u2013\u00a0";
+  }
+
   return (
     <span>
       <time dateTime={startIso}>{formattedStart}</time>
-      {" – "}
+      {separator}
       <time dateTime={endIso}>{formattedEnd}</time>
       {formattedDuration && ` (${formattedDuration})`}
     </span>

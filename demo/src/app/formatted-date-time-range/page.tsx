@@ -19,8 +19,10 @@ export default function FormattedDateTimeRangePage() {
         day (per <code>isSameDay</code>), the end&apos;s date is omitted (only
         its time is shown). <code>includeDuration</code> appends a formatted
         duration in parentheses; <code>includeWeekday</code> prefixes each
-        endpoint with an abbreviated weekday name. Formats like{" "}
-        <code>FormattedDateTime</code> (no <code>Intl</code>).
+        endpoint with an abbreviated weekday name. Each endpoint formats like{" "}
+        <code>FormattedDateTime</code> (<code>fi</code>/<code>sv</code>{" "}
+        identical, no <code>Intl</code>); non-fi/sv locales separate the two
+        endpoints with non-breaking spaces around the dash.
       </p>
       <ul>
         <li>
@@ -59,9 +61,19 @@ export default function FormattedDateTimeRangePage() {
           />
         </li>
         <li>
-          Spans midnight, includeWeekday=true:{" "}
+          Spans midnight, includeWeekday=true, locale=&quot;en&quot;:{" "}
           <FormattedDateTimeRange
             locale="en"
+            start={multiDayStart}
+            end={multiDayEnd}
+            includeWeekday
+          />
+        </li>
+        <li>
+          Spans midnight, includeWeekday=true, locale=&quot;sv&quot; (identical
+          date/time format to fi):{" "}
+          <FormattedDateTimeRange
+            locale="sv"
             start={multiDayStart}
             end={multiDayEnd}
             includeWeekday

@@ -109,7 +109,7 @@ export function FormattedDateRange({
         timezone={timezone}
         as={Component}
       />
-      {collapsible ? "–" : " – "}
+      {collapsible ? "–" : "\u00a0\u2013\u00a0"}
       <FormattedDate
         locale={locale}
         date={end}

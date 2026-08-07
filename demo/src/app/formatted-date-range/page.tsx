@@ -9,7 +9,7 @@ export default function FormattedDateRangePage() {
         fall on the same day, and collapses shared year/month for{" "}
         <code>fi</code>/<code>sv</code> (e.g. &quot;1.–3.5.2026&quot;). Any
         other locale (eg. <code>en</code>) gets no collapsing, and its two
-        endpoints are separated by a non-breaking space around the dash so it
+        endpoints are separated by non-breaking spaces around the dash so it
         doesn&apos;t get lost among the date&apos;s own hyphens.
       </p>
       <ul>
@@ -34,7 +34,7 @@ export default function FormattedDateRangePage() {
           <FormattedDateRange locale="fi" start="2026-12-30" end="2027-01-02" />
         </li>
         <li>
-          Same range, locale=&quot;en&quot; (no collapsing):{" "}
+          Same month &amp; year as above, locale=&quot;en&quot; (no collapsing):{" "}
           <FormattedDateRange locale="en" start="2026-08-01" end="2026-08-03" />
         </li>
         <li>

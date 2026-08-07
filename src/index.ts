@@ -33,6 +33,7 @@ export {
   formatDurationMinutes,
   FormattedDateTimeRange,
 } from "./components/FormattedDateTimeRange";
+export type { DateTimeValue } from "./helpers/temporal";
 
 export { default as InterceptingRouteModal } from "./components/InterceptingRouteModal";
 

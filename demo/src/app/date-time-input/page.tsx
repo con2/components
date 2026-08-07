@@ -17,10 +17,19 @@ export default function DateTimeInputPage() {
 
       <h2>Basic</h2>
       <form className="mb-4">
-        <label className="form-label">Event start</label>
+        <label className="form-label">Event start (en-US)</label>
         <DateTimeInput
           name="startsAt"
           locale="en-US"
+          defaultValue="2026-08-15T14:30:00Z"
+          defaultTimezone="Europe/Helsinki"
+        />
+      </form>
+      <form className="mb-4">
+        <label className="form-label">Event start (fi)</label>
+        <DateTimeInput
+          name="startsAtFi"
+          locale="fi"
           defaultValue="2026-08-15T14:30:00Z"
           defaultTimezone="Europe/Helsinki"
         />

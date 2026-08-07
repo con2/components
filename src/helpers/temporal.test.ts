@@ -3,6 +3,9 @@ import { describe, expect, it } from "vitest";
 import {
   defaultTimezone,
   evening,
+  formatPlainDate,
+  formatTimeOfDay,
+  formatWeekdayAbbreviation,
   fromEvening,
   fromEveningNull,
   fromJustBeforeMidnight,
@@ -291,5 +294,82 @@ describe("zPlainDateNull", () => {
 
   it("returns null for an empty string", () => {
     expect(zPlainDateNull.parse("")).toBeNull();
+  });
+});
+
+describe("formatPlainDate", () => {
+  const date = Temporal.PlainDate.from("2027-02-06");
+
+  it("renders ISO 8601 for en", () => {
+    expect(formatPlainDate(date, "en")).toBe("2027-02-06");
+  });
+
+  it("renders D.M.YYYY for fi and sv, identically", () => {
+    expect(formatPlainDate(date, "fi")).toBe("6.2.2027");
+    expect(formatPlainDate(date, "sv")).toBe(formatPlainDate(date, "fi"));
+  });
+
+  it("falls back to en for any other locale", () => {
+    expect(formatPlainDate(date, "de")).toBe("2027-02-06");
+  });
+});
+
+describe("formatTimeOfDay", () => {
+  it("zero-pads both hour and minute", () => {
+    expect(formatTimeOfDay({ hour: 9, minute: 5 })).toBe("09:05");
+  });
+
+  it("leaves already-two-digit values unpadded", () => {
+    expect(formatTimeOfDay({ hour: 23, minute: 59 })).toBe("23:59");
+  });
+});
+
+describe("formatWeekdayAbbreviation", () => {
+  // 2026-01-05 through 2026-01-11 is a Monday-through-Sunday week.
+  const week = Array.from({ length: 7 }, (_, i) =>
+    Temporal.PlainDate.from("2026-01-05")
+      .add({ days: i })
+      .toZonedDateTime({ timeZone: defaultTimezone }),
+  );
+
+  it("maps all seven days for en", () => {
+    expect(week.map((zdt) => formatWeekdayAbbreviation(zdt, "en"))).toEqual([
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun",
+    ]);
+  });
+
+  it("maps all seven days for fi", () => {
+    expect(week.map((zdt) => formatWeekdayAbbreviation(zdt, "fi"))).toEqual([
+      "ma",
+      "ti",
+      "ke",
+      "to",
+      "pe",
+      "la",
+      "su",
+    ]);
+  });
+
+  it("maps all seven days for sv", () => {
+    expect(week.map((zdt) => formatWeekdayAbbreviation(zdt, "sv"))).toEqual([
+      "mån",
+      "tis",
+      "ons",
+      "tors",
+      "fre",
+      "lör",
+      "sön",
+    ]);
+  });
+
+  it("falls back to en for any other locale", () => {
+    const monday = week[0];
+    expect(formatWeekdayAbbreviation(monday, "de")).toBe("Mon");
   });
 });

@@ -132,8 +132,7 @@ export function toISODateEmpty(
   return toISODate(date, timezone);
 }
 
-/// No `Intl` - only fi/en/sv are ever rendered, and fi/sv share this format;
-/// unrecognized locales fall back to en.
+/// This library only ever renders fi/en/sv.
 export function formatPlainDate(
   date: Temporal.PlainDate,
   locale: string,
@@ -147,7 +146,7 @@ export function formatPlainDate(
   }
 }
 
-/// Zero-padded 24h HH:MM - no locale-dependent 12h clock in this library.
+/// No locale-dependent 12h clock in this library.
 export function formatTimeOfDay(time: {
   hour: number;
   minute: number;
@@ -156,7 +155,7 @@ export function formatTimeOfDay(time: {
 }
 
 /// `Temporal`'s `dayOfWeek` is 1 (Monday) through 7 (Sunday).
-const weekdayAbbreviations: Record<"en" | "fi" | "sv", string[]> = {
+const weekdayAbbreviations: Record<string, string[]> = {
   en: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
   fi: ["ma", "ti", "ke", "to", "pe", "la", "su"],
   sv: ["mån", "tis", "ons", "tors", "fre", "lör", "sön"],
@@ -166,14 +165,9 @@ export function formatWeekdayAbbreviation(
   zdt: Temporal.ZonedDateTime,
   locale: string,
 ): string {
-  switch (locale) {
-    case "fi":
-      return weekdayAbbreviations.fi[zdt.dayOfWeek - 1];
-    case "sv":
-      return weekdayAbbreviations.sv[zdt.dayOfWeek - 1];
-    default:
-      return weekdayAbbreviations.en[zdt.dayOfWeek - 1];
-  }
+  return (weekdayAbbreviations[locale] ?? weekdayAbbreviations.en)[
+    zdt.dayOfWeek - 1
+  ];
 }
 
 export const morning: Temporal.PlainTime = Temporal.PlainTime.from({
