@@ -1,4 +1,10 @@
-import { InfoCircle, OpenInNewTab, SwapVert } from "@con2/components/icons";
+import {
+  CalendarAddOn,
+  CalendarEdit,
+  InfoCircle,
+  OpenInNewTab,
+  SwapVert,
+} from "@con2/components/icons";
 
 export default function IconsPage() {
   return (
@@ -21,6 +27,14 @@ export default function IconsPage() {
         <div className="text-center">
           <SwapVert />
           <div>SwapVert</div>
+        </div>
+        <div className="text-center">
+          <CalendarAddOn />
+          <div>CalendarAddOn</div>
+        </div>
+        <div className="text-center">
+          <CalendarEdit />
+          <div>CalendarEdit</div>
         </div>
       </div>
     </div>
