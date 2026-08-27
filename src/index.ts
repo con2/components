@@ -41,7 +41,6 @@ export { default as LanguageSwitcher } from "./components/LanguageSwitcher";
 export type { LanguageSwitcherMessages } from "./components/LanguageSwitcher";
 
 export { default as Linebreaks } from "./components/Linebreaks";
-export { default as LinebreaksDangerousHtml } from "./components/LinebreaksDangerousHtml";
 
 export { default as Markdown } from "./components/Markdown";
 export { default as MarkdownEditor } from "./components/MarkdownEditor";
@@ -53,7 +52,6 @@ export { default as Messages } from "./components/Messages";
 export { default as ModalButton } from "./components/ModalButton";
 
 export { default as Paragraphs } from "./components/Paragraphs";
-export { default as ParagraphsDangerousHtml } from "./components/ParagraphsDangerousHtml";
 
 export { default as PatternTextInput } from "./components/PatternTextInput";
 

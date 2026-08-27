@@ -23,9 +23,7 @@ const groups: DemoGroup[] = [
     title: "Text rendering",
     links: [
       { slug: "linebreaks", label: "Linebreaks" },
-      { slug: "linebreaks-dangerous-html", label: "LinebreaksDangerousHtml" },
       { slug: "paragraphs", label: "Paragraphs" },
-      { slug: "paragraphs-dangerous-html", label: "ParagraphsDangerousHtml" },
       { slug: "markdown", label: "Markdown" },
       { slug: "unrendered-markdown", label: "UnrenderedMarkdown" },
     ],

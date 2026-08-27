@@ -90,10 +90,6 @@ Prioritize pure-logic units (helpers, `DataTable`'s cell-rendering functions, `t
 
 Ask whether it's actually shared. This library exists because two apps converged on duplicate implementations — it is not a dumping ground for "generically useful" code that only one app happens to use. A component with a single call site across both consuming apps is a signal it may belong colocated with its one caller instead of here (see git history: `Section` and `Heading` were removed from this library for exactly this reason — `Section` had no caller using its differentiating feature, and `Heading` had exactly one caller, tied to the `SchemaForm` subsystem that's explicitly out of scope for this library).
 
-## XSS-sensitive components
-
-`LinebreaksDangerousHtml` and `ParagraphsDangerousHtml` render raw/dangerous HTML via `dangerouslySetInnerHTML`. Only ever pass them trusted content.
-
 ## Commit messages must follow Conventional Commits
 
 **This is enforced, not a style preference.** CI has two things riding on it:

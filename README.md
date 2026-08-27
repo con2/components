@@ -51,7 +51,3 @@ npm run dev
 - `src/components/` — components
 - `src/icons/` — the Material Symbols icon set (see `src/icons/README.md` for how to add a new icon)
 - `src/helpers/` — pure helper functions
-
-## XSS-sensitive components
-
-`LinebreaksDangerousHtml` and `ParagraphsDangerousHtml` render raw/dangerous HTML via `dangerouslySetInnerHTML`. Only pass them trusted content.
