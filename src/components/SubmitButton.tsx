@@ -21,7 +21,8 @@ export function SubmitButton({
   disabled,
   name,
   value,
-  className = "btn btn-primary",
+  // react-bootstrap's Button adds `btn btn-<variant>` itself; a default here would fight `variant`.
+  className,
   variant = "primary",
   size,
   confirmationMessage,

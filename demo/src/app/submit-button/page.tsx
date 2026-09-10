@@ -25,6 +25,12 @@ export default function SubmitButtonPage() {
         </SubmitButton>
       </form>
 
+      <form className="d-flex gap-2 mb-3">
+        <SubmitButton variant="outline-danger" size="sm">
+          Remove profile photo
+        </SubmitButton>
+      </form>
+
       <form className="d-flex gap-2">
         <SubmitButton variant="secondary" size="sm" disabled>
           Disabled

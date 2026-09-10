@@ -29,6 +29,19 @@ describe("SubmitButton", () => {
     expect(screen.getByRole("button", { name: "Save" })).toBeDisabled();
   });
 
+  it("styles the button by variant alone, without a competing default class", () => {
+    render(
+      <form>
+        <SubmitButton variant="outline-danger" className="ms-2">
+          Remove
+        </SubmitButton>
+      </form>,
+    );
+    const button = screen.getByRole("button", { name: "Remove" });
+    expect(button).toHaveClass("btn", "btn-outline-danger", "ms-2");
+    expect(button).not.toHaveClass("btn-primary");
+  });
+
   it("does not render a spinner when not pending", () => {
     const { container } = render(
       <form>
