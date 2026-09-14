@@ -26,7 +26,7 @@
   "peerDependencies": {
     "bootstrap": "^5.3.0",
     "next": "^16.2.0",
-    "next-auth": "^4.24.0",
+    "next-auth": "^5.0.0-beta.25",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.0",
     "react-dom": "^19.2.0"
@@ -59,7 +59,7 @@
     "jsdom": "^26.0.0",
     "lint-staged": "^17.3.0",
     "next": "^16.2.12",
-    "next-auth": "^4.24.15",
+    "next-auth": "5.0.0-beta.32",
     "prettier": "^3.9.6",
     "react": "^19.2.8",
     "react-bootstrap": "^2.10.10",

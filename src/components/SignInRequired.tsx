@@ -18,7 +18,7 @@ const signInMessages: Record<string, string> = {
 interface SignInRequiredProps {
   messages: Messages;
   locale: string;
-  /// The NextAuth provider id to sign in with, eg. "kompassi".
+  /// The Auth.js provider id to sign in with, eg. "kompassi".
   providerId: string;
 }
 
