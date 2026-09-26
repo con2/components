@@ -49,7 +49,7 @@ This library only ever renders three locales - `fi`, `en`, `sv` - matched verbat
 - Dates: `en` (and fallback) renders ISO 8601 (`2027-02-06`); `fi`/`sv` render `D.M.YYYY` (`6.2.2027`, no leading zeroes).
 - Times: always a zero-padded 24h clock (`18:00`) - none of the three locales use a 12h clock in this library's UI.
 - `FormattedDateTime`/`FormattedDateTimeRange` take an `includeWeekday` boolean instead of an `Intl.DateTimeFormatOptions`-style `options` prop, prefixing an abbreviated weekday name.
-- `FormattedDateRange`'s compact collapsing (`"1.–3.5.2024"`) applies to `fi`/`sv`; any other locale gets its two endpoints joined by a dash wrapped in non-breaking spaces (`"2026-08-01 – 2026-08-03"`) so the dash doesn't get lost among the ISO date's own hyphens.
+- `FormattedDateRange`'s compact collapsing (`"1.–3.5.2024"`) applies to `fi`/`sv`; any other locale gets its two endpoints joined by a dash wrapped in non-breaking spaces (`"2026-08-01 – 2026-08-03"`) so the dash doesn't get lost among the ISO date's own hyphens. `FormattedDateRange` and its plain-text counterpart `formatDateRange` both render from `dateRangeParts` (`src/helpers/temporal.ts`), so change the range format there, not in either of them.
 
 A new date/time-rendering component must follow the same fixed-format, no-`Intl` approach.
 

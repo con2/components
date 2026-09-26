@@ -146,6 +146,64 @@ export function formatPlainDate(
   }
 }
 
+type DateRangeEndpoint = Date | Temporal.PlainDate | string | null | undefined;
+
+export interface DateRangePart {
+  date: Temporal.PlainDate;
+  text: string;
+}
+
+/// A date range as one or two rendered dates, to be joined by `separator`.
+/// fi/sv collapse the start date's shared month and year ("1.–3.5.2024");
+/// other locales keep both dates whole and pad the dash with non-breaking
+/// spaces so it doesn't get lost among the ISO dates' own hyphens.
+export function dateRangeParts(
+  start: DateRangeEndpoint,
+  end: DateRangeEndpoint,
+  locale: string,
+  timezone: Temporal.TimeZoneLike = defaultTimezone,
+): { parts: DateRangePart[]; separator: string } {
+  const startDay = start ? toPlainDate(start, timezone) : null;
+  const endDay = end ? toPlainDate(end, timezone) : null;
+  const whole = (date: Temporal.PlainDate) => ({
+    date,
+    text: formatPlainDate(date, locale),
+  });
+
+  const collapsible = locale === "fi" || locale === "sv";
+  const separator = collapsible ? "\u2013" : "\u00a0\u2013\u00a0";
+
+  if (!startDay || !endDay || startDay.equals(endDay)) {
+    const single = startDay ?? endDay;
+    return { parts: single ? [whole(single)] : [], separator };
+  }
+
+  if (!collapsible || startDay.year !== endDay.year) {
+    return { parts: [whole(startDay), whole(endDay)], separator };
+  }
+
+  const startText =
+    startDay.month === endDay.month
+      ? `${startDay.day}.`
+      : `${startDay.day}.${startDay.month}.`;
+  return {
+    parts: [{ date: startDay, text: startText }, whole(endDay)],
+    separator,
+  };
+}
+
+/// Plain-text `FormattedDateRange`, for contexts that can't render React
+/// (eg. markdown). Empty when both endpoints are missing.
+export function formatDateRange(
+  start: DateRangeEndpoint,
+  end: DateRangeEndpoint,
+  locale: string,
+  timezone: Temporal.TimeZoneLike = defaultTimezone,
+): string {
+  const { parts, separator } = dateRangeParts(start, end, locale, timezone);
+  return parts.map((part) => part.text).join(separator);
+}
+
 /// No locale-dependent 12h clock in this library.
 export function formatTimeOfDay(time: {
   hour: number;

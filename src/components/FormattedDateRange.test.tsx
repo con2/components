@@ -32,4 +32,22 @@ describe("FormattedDateRange", () => {
     );
     expect(container.textContent).toBe("30.12.2026–2.1.2027");
   });
+
+  it("gives each rendered date part the full ISO date of its endpoint", () => {
+    const { container } = render(
+      <FormattedDateRange locale="fi" start="2024-05-01" end="2024-05-03" />,
+    );
+    const times = [...container.querySelectorAll("time")];
+    expect(times.map((time) => time.getAttribute("datetime"))).toEqual([
+      "2024-05-01",
+      "2024-05-03",
+    ]);
+  });
+
+  it("renders nothing when both endpoints are missing", () => {
+    const { container } = render(
+      <FormattedDateRange locale="fi" start={null} end={undefined} />,
+    );
+    expect(container.innerHTML).toBe("");
+  });
 });

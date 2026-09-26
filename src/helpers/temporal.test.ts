@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   defaultTimezone,
   evening,
+  formatDateRange,
   formatPlainDate,
   formatTimeOfDay,
   formatWeekdayAbbreviation,
@@ -371,5 +372,58 @@ describe("formatWeekdayAbbreviation", () => {
   it("falls back to en for any other locale", () => {
     const monday = week[0];
     expect(formatWeekdayAbbreviation(monday, "de")).toBe("Mon");
+  });
+});
+
+describe("formatDateRange", () => {
+  it("collapses a same-month fi range to D.–D.M.YYYY", () => {
+    expect(formatDateRange("2026-06-02", "2026-06-05", "fi")).toBe(
+      "2.–5.6.2026",
+    );
+  });
+
+  it("collapses a same-year sv range identically to fi", () => {
+    expect(formatDateRange("2024-04-28", "2024-05-03", "sv")).toBe(
+      "28.4.–3.5.2024",
+    );
+  });
+
+  it("does not collapse a fi range spanning different years", () => {
+    expect(formatDateRange("2026-12-30", "2027-01-02", "fi")).toBe(
+      "30.12.2026–2.1.2027",
+    );
+  });
+
+  it("does not collapse an en range, and separates with a non-breaking space", () => {
+    expect(formatDateRange("2026-08-01", "2026-08-03", "en")).toBe(
+      "2026-08-01\u00a0\u2013\u00a02026-08-03",
+    );
+  });
+
+  it("treats a regional variant like en-US as en", () => {
+    expect(formatDateRange("2026-08-01", "2026-08-03", "en-US")).toBe(
+      "2026-08-01\u00a0\u2013\u00a02026-08-03",
+    );
+  });
+
+  it("renders a single-day range as one date", () => {
+    expect(formatDateRange("2026-06-02", "2026-06-02", "fi")).toBe("2.6.2026");
+  });
+
+  it("renders whichever endpoint is present when the other is missing", () => {
+    expect(formatDateRange("2026-06-02", null, "fi")).toBe("2.6.2026");
+    expect(formatDateRange(undefined, "2026-06-05", "en")).toBe("2026-06-05");
+  });
+
+  it("renders nothing when both endpoints are missing", () => {
+    expect(formatDateRange(null, null, "fi")).toBe("");
+  });
+
+  it("takes the calendar day of a Date in the given timezone", () => {
+    // 22:30Z on 1 June is already 2 June in Helsinki (UTC+3), but still 1 June in UTC.
+    const start = new Date("2026-06-01T22:30:00Z");
+    const end = new Date("2026-06-05T12:00:00Z");
+    expect(formatDateRange(start, end, "fi")).toBe("2.–5.6.2026");
+    expect(formatDateRange(start, end, "fi", "UTC")).toBe("1.–5.6.2026");
   });
 });

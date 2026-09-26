@@ -21,6 +21,7 @@ export {
   toISODateNull,
   toISODateEmpty,
   formatPlainDate,
+  formatDateRange,
   formatTimeOfDay,
   formatWeekdayAbbreviation,
   morning,
