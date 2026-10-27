@@ -3,6 +3,8 @@
 import { ReactNode, MouseEvent, useCallback, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 import { createPortal } from "react-dom";
 
 interface Messages {
@@ -22,6 +24,9 @@ interface Props {
   /// `messages` prop rather than an inlined locale table.
   messages: Messages;
   disabled?: boolean;
+  /// Shown as a tooltip over the button while it is disabled, so the user learns
+  /// what to do before they can proceed. Ignored while the button is enabled.
+  disabledReason?: ReactNode;
   className?: string;
   submitButtonVariant?: "primary" | "danger" | "success";
   /// When set (and no `action` is given), the modal gets a primary button with this
@@ -42,6 +47,7 @@ export default function ModalButton({
   action,
   messages,
   disabled,
+  disabledReason,
   className = "btn btn-link p-0 link-subtle",
   submitButtonVariant = "primary",
   confirmLabel,
@@ -54,19 +60,35 @@ export default function ModalButton({
     setIsVisible(true);
   }, []);
 
+  const showDisabledReason = Boolean(disabled && disabledReason);
+
+  // A disabled button fires no mouse events, so the tooltip is triggered by a
+  // wrapper span and the button itself must not swallow the pointer.
+  const button = (
+    <button
+      type="button"
+      className={showDisabledReason ? `${className} pe-none` : className}
+      onClick={open}
+      title={showDisabledReason ? undefined : (labelTitle ?? title)}
+      disabled={disabled}
+    >
+      {label ?? `${title}…`}
+    </button>
+  );
+
   /// TODO Change manual button to React Bootstrap one.
-  /// Add a tooltip to the button if it is disabled to tell us why.
   return (
     <>
-      <button
-        type="button"
-        className={className}
-        onClick={open}
-        title={labelTitle ?? title}
-        disabled={disabled}
-      >
-        {label ?? `${title}…`}
-      </button>
+      {showDisabledReason ? (
+        <OverlayTrigger
+          placement="bottom"
+          overlay={<Tooltip>{disabledReason}</Tooltip>}
+        >
+          <span className="d-inline-block">{button}</span>
+        </OverlayTrigger>
+      ) : (
+        button
+      )}
       {!disabled &&
         typeof document !== "undefined" &&
         createPortal(
