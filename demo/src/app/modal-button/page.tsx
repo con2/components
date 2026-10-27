@@ -38,6 +38,19 @@ export default function ModalButtonPage() {
         <p>Category: Workshops</p>
         <p>Date: Any</p>
       </ModalButton>
+
+      <h2 className="mt-3">
+        Disabled with a reason (hover to see the tooltip)
+      </h2>
+      <ModalButton
+        title="Remove survey"
+        className="btn btn-outline-danger"
+        messages={{ cancel: "Cancel", submit: "Remove" }}
+        disabled
+        disabledReason="In order to remove this survey, remove all of its language versions first."
+      >
+        <p>Are you sure you want to remove the survey?</p>
+      </ModalButton>
     </div>
   );
 }
