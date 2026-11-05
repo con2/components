@@ -9,7 +9,8 @@ export default function MarkdownEditorPage() {
       <p>
         A markdown editor with a restricted toolbar (headings, bold, italics,
         lists, links) backed by a hidden input, so it participates in normal
-        form submission via its <code>name</code> prop.
+        form submission via its <code>name</code> prop. Its <code>id</code> goes
+        on the text area, so a <code>&lt;label htmlFor&gt;</code> names it.
       </p>
       <form className="mb-4">
         <label className="form-label" htmlFor="description">
@@ -44,6 +45,29 @@ export default function MarkdownEditorPage() {
           locale="en"
           rows={6}
           maxLength={60}
+        />
+      </form>
+
+      <h2>Dark colour mode, Finnish toolbar</h2>
+      <p>
+        The editor follows <code>data-bs-theme</code> of its nearest ancestor
+        that sets one, and stays light where none does. Toolbar labels come from
+        an inlined fi/en/sv table selected by <code>locale</code>.
+      </p>
+      <form
+        data-bs-theme="dark"
+        className="p-3 rounded"
+        style={{ background: "#0b1020", color: "#eaeef8" }}
+      >
+        <label className="form-label" htmlFor="kuvaus">
+          Kuvaus
+        </label>
+        <MarkdownEditor
+          id="kuvaus"
+          name="kuvaus"
+          defaultValue={"## Tervetuloa\n\nTämä on **lihavoitua** tekstiä."}
+          locale="fi"
+          rows={6}
         />
       </form>
     </div>
