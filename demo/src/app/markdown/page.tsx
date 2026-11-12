@@ -10,6 +10,8 @@ Things to bring:
 - A valid ID
 - Comfortable shoes
 - Your **printed** ticket
+
+Doors open at ~~17:00~~ 18:00, about ~30 minutes before the program starts.
 `;
 
 export default function MarkdownPage() {
@@ -18,6 +20,8 @@ export default function MarkdownPage() {
       <h1>Markdown</h1>
       <p>
         Renders a markdown string as sanitized HTML, opening links in a new tab.
+        Of GitHub Flavored Markdown, only <code>~~strikethrough~~</code> is
+        supported.
       </p>
       <div className="border rounded p-3">
         <Markdown input={sample} />
