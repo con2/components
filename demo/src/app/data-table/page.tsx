@@ -70,6 +70,18 @@ export default function DataTablePage() {
         getRowHref={(person) => `/data-table#${person.id}`}
       />
 
+      <h2>Stable row identity via getRowKey</h2>
+      <p>
+        Rows are keyed by position unless getRowKey is given. Pass it whenever
+        cells hold state (inputs, selects) and rows can be filtered or
+        reordered, so the state stays with the row.
+      </p>
+      <DataTable
+        rows={people}
+        columns={columns}
+        getRowKey={(person) => person.id}
+      />
+
       <h2>With a footer</h2>
       <DataTable rows={people.slice(0, 3)} columns={columns}>
         <TableFooter colSpan={columns.length}>

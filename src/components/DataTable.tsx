@@ -42,6 +42,9 @@ interface DataTableProps<Row> {
   getTotalMessage?: (total: number) => ReactNode;
   /// NOTE: Do not mix getRowHref and a custom getCellElement (or implement the .link-stretched logic in getCellElement yourself)
   getRowHref?: (row: Row) => string | undefined;
+  /// Stable identity of a row. Without it rows are keyed by position, so stateful cell contents
+  /// (inputs, selects) stay with the slot, not the row, when rows are filtered or reordered.
+  getRowKey?: (row: Row) => string | number;
   responsive?: Responsive;
   children?: ReactNode;
 }
@@ -118,7 +121,8 @@ export function TableFooter({
 }
 
 export function DataTable<Row>(props: DataTableProps<Row>) {
-  const { rows, getTotalMessage, responsive, children, getRowHref } = props;
+  const { rows, getTotalMessage, responsive, children, getRowHref, getRowKey } =
+    props;
 
   const columns: Column<Row>[] = props.columns.map((column) => ({
     getCellElement: column.getCellElement ?? defaultCellElement,
@@ -150,7 +154,7 @@ export function DataTable<Row>(props: DataTableProps<Row>) {
         </thead>
         <tbody>
           {rows.map((row, idx) => (
-            <tr key={idx}>
+            <tr key={getRowKey ? getRowKey(row) : idx}>
               {columns.map((column) => (
                 <Fragment key={column.slug}>
                   {column.getCellElement!(row, column.getCellContents!(row))}

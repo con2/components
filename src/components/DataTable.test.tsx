@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { useState } from "react";
 import { describe, expect, it } from "vitest";
 import { Column, DataTable } from "./DataTable";
 
@@ -78,5 +79,45 @@ describe("DataTable", () => {
   it("renders no rows when the rows array is empty", () => {
     const { container } = render(<DataTable rows={[]} columns={columns} />);
     expect(container.querySelectorAll("tbody tr")).toHaveLength(0);
+  });
+
+  describe("getRowKey", () => {
+    function Counter() {
+      const [count, setCount] = useState(0);
+      return <button onClick={() => setCount(count + 1)}>{count}</button>;
+    }
+
+    const statefulColumns: Column<Row>[] = [
+      { slug: "name", title: "Name" },
+      { slug: "counter", title: "Counter", getCellContents: () => <Counter /> },
+    ];
+
+    it("keeps cell state with the row when an earlier row is removed", () => {
+      const { rerender } = render(
+        <DataTable
+          rows={rows}
+          columns={statefulColumns}
+          getRowKey={(row) => row.id}
+        />,
+      );
+      fireEvent.click(screen.getAllByRole("button")[0]);
+      rerender(
+        <DataTable
+          rows={rows.slice(1)}
+          columns={statefulColumns}
+          getRowKey={(row) => row.id}
+        />,
+      );
+      expect(screen.getByRole("button")).toHaveTextContent("0");
+    });
+
+    it("keys rows by position without it, so cell state stays with the slot", () => {
+      const { rerender } = render(
+        <DataTable rows={rows} columns={statefulColumns} />,
+      );
+      fireEvent.click(screen.getAllByRole("button")[0]);
+      rerender(<DataTable rows={rows.slice(1)} columns={statefulColumns} />);
+      expect(screen.getByRole("button")).toHaveTextContent("1");
+    });
   });
 });
